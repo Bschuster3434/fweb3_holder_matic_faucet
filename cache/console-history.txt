@@ -1,0 +1,27 @@
+await token.totalSupply()
+await token.name()
+await token.symbol()
+await token.supply()
+await token.decimals()
+awit token.decimals()
+const token = await Token.attach('0x5FbDB2315678afecb367f032d93F642f64180aa3');
+const Token = await ethers.getContractFactory('SchusterianTestToken');
+const Box = await ethers.getContractFactory('SchusterianTestToken');
+const Box = await etheres.getContractFactory('SchusterianTestToken');
+await token.balanceOf("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
+await token.symbol()
+await token.symbol
+token.symbol
+token.symbol.then(console.log);
+token.symbol().then(console.log);
+await token.symbol()
+await token.symbol
+token.symbol()
+token.symbol
+token.balanceOf()
+const token = await Token.attach('0x5FbDB2315678afecb367f032d93F642f64180aa3')
+const Token = await ethers.getContractFactory('SchusterianTestToken');
+"
+'
+const Token = await ethers.getContractFactory('SchusterianTestToken");
+const Token await ethers.getContractFactory('SchusterianTestToken");
