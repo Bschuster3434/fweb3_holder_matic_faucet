@@ -47,6 +47,15 @@ describe("SchusterianTestFaucet", function () {
     });
   });
 
+  describe("Owner Functions", function () {
+    it("Should only allow the owner to set the timeout time", async function () {
+        await faucet.setTimeout(20); //Succeeds
+        await expect(
+          faucet.connect(addr1).setTimeout(20) //Fails
+        ).to.be.revertedWith("Ownable: caller is not the owner")
+    })
+  })
+
   describe("Faucet", function () {
     it("Should not send funds if there are no tokens to give", async function () {
       await expect(
@@ -93,6 +102,8 @@ describe("SchusterianTestFaucet", function () {
         to: faucet.address,
         value: ethers.utils.parseEther("100.0"),
       });
+
+      await faucet.setTimeout(1440); //Set timeout to be 24 hours
 
       await faucet.faucet(addr1.address); //Success
       await expect(
