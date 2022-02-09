@@ -6,9 +6,9 @@ describe("SchusterianTestToken", function () {
     
         const Token = await ethers.getContractFactory("SchusterianTestToken");
     
-        const hardhatToken = await Token.deploy();
+        const schusterToken = await Token.deploy();
     
-        const ownerBalance = await hardhatToken.balanceOf(owner.address);
-        expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);
+        const ownerBalance = await schusterToken.balanceOf(owner.address);
+        expect(await schusterToken.totalSupply()).to.equal(ownerBalance);
   });
 });
