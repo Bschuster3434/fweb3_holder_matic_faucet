@@ -1,0 +1,116 @@
+await faucetWithOwner.getBalance();
+await faucetWithOwner.getBalance;
+faucetWithOwner.getBalance;
+faucetWithOwner.getBalance
+faucet
+faucetWithOwner.getBalance();
+ await faucetWithOwner.getBalance();
+let balance0 = await faucetWithOwner.getBalance();
+let balance = await faucetWithOwner.getBalance();
+let faucetWithOwner = faucet.connect(owner);
+let balance = await faucet.getBalance();
+let faucet = await Token.attach("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+let Token = await ethers.getContractFactory("SchusterEthereumFaucet");
+const [owner] = await ethers.getSigners();
+let balance = await faucet.getBalance();
+let faucet = await Token.attach("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+let Token = await ethers.getContractFactory("SchusterEthereumFaucet");
+const [owner] = await ethers.getSigners();
+let balance0 = await faucet.getBalance();
+let balance = await faucet.getBalance();
+let balance = faucet.getBalance();
+await tx.wait();
+let tx = await faucetWithOwner.sendFaucetTokens("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
+let faucetWithOwner = faucet.connect(owner);
+let faucet = await Token.attach("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+let Token = await ethers.getContractFactory("SchusterEthereumFaucet");
+const [owner] = await ethers.getSigners();
+let Token = await ethers.getContractFactory("SchusterEthereumFaucet");
+const [owner] = await ethers.getSigners();
+await tx0.wait()
+let tx0 = await faucetWithSigner.getBalance();
+await faucet.getBalance();
+faucet.getBalance();
+await tx.wait();
+const tx = await faucetWithSigner.sendFaucetTokens("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
+const faucetWithSigner = faucet.connect(owner);
+const faucet = await Faucet.attach("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+const Faucet = await ethers.getContractFactory("SchusterEthereumFaucet");
+const [owner] = await ethers.getSigners();
+let Faucet0 = ethers.getContractFactory("SchusterEthereumFaucet");
+let faucet0 = Faucet0.assign("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+let faucet = Faucet0.assign("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+let faucet = Faucet0.attach("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+let Faucet0 = ethers.getContractFactory("SchusterEthereumFaucet");
+let Faucet = ethers.getContractFactory("SchusterEthereumFaucet");
+let Faucet = ethers.ContractFactory("SchusterEthereumFaucet");
+const [owner, addr1, addr2] = await ethers.getSigners();
+const [owner, addr1, addr2] = await.ethers.getSigners();
+const Faucet = await ethers.getContractFactory("SchusterEthereumFaucet");
+const [owner, addr1, addr2] = await ethers.getSigners();
+await faucet.getBalance();
+await tx.wait();
+console.log(tx.hash);
+let tx = await faucetWithSigner.sendFaucetTokens("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
+let faucetWithSigner = faucet.connect(owner);
+await owner.getBalance()
+await owner.getBalance
+await addr1.getBalance()
+await addr1.getBalance
+await faucet.getBalance();
+const faucet = await Faucet.attach("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+const Faucet = await ethers.getContractFactory("SchusterEthereumFaucet");
+await addr1.getBalance()
+addr1.getBalance()
+addr1.balance()
+addr1.balance
+const [owner, addr1, addr2, addr3] = await ethers.getSigners();
+faucet.getBalance()
+faucet.balance
+const txHash0 = await owner.sendTransaction(param);
+console.log("txHash0 is " + txHash0);
+console.log("txHash0 is " + txHash0());
+console.log("txHash0 is " + txHash0);
+const txHash0 = await owner.sendTransaction(param);
+const txHash = await owner.sendTransaction(param);
+const txHash = await owner.sendTransaction(params);
+param
+const param = { to: faucet.address, value: ethers.utils.parseUnits("10", "ether").toHexString() };
+owner.address
+const [owner] = await ethers.getSigners();
+faucet.balance
+faucet.balance()
+await faucet.owner()
+await faucet.owner
+faucet.owner()
+faucet.owner
+const faucet = await Faucet.attach("0xe7f1725e7734ce288f8367e1bb143e90bb3f0512");
+const Faucet = await ethers.getContractFactory("SchusterEthereumFaucet");
+ethers
+await token.totalSupply()
+await token.name()
+await token.symbol()
+await token.supply()
+await token.decimals()
+awit token.decimals()
+const token = await Token.attach('0x5FbDB2315678afecb367f032d93F642f64180aa3');
+const Token = await ethers.getContractFactory('SchusterianTestToken');
+const Box = await ethers.getContractFactory('SchusterianTestToken');
+const Box = await etheres.getContractFactory('SchusterianTestToken');
+await token.balanceOf("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
+await token.symbol()
+await token.symbol
+token.symbol
+token.symbol.then(console.log);
+token.symbol().then(console.log);
+await token.symbol()
+await token.symbol
+token.symbol()
+token.symbol
+token.balanceOf()
+const token = await Token.attach('0x5FbDB2315678afecb367f032d93F642f64180aa3')
+const Token = await ethers.getContractFactory('SchusterianTestToken');
+"
+'
+const Token = await ethers.getContractFactory('SchusterianTestToken");
+const Token await ethers.getContractFactory('SchusterianTestToken");

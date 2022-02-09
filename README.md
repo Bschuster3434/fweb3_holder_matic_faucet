@@ -8,6 +8,7 @@ Limited to only one Ethereum per person.
 Also building a front end.
 
 #To Do
-- Build token logic to see if someone has tokens
-- Automatically deploy 10 ETH to the faucet
-- Have prompts to tell you WTF is going on
+- Figure out how to use hardhat to read the contract including balance data
+- Add token logic to test for tokens being created and sent
+- Automatically send Schuster tokens to accounts to test
+- Figure out testing suite
