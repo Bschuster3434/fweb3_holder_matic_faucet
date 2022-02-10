@@ -1,6 +1,7 @@
 const { expect } = require("chai");
+require('dotenv').config();
 
-describe("SchusterianTestFaucet", function () {
+describe("SchusterEtherFaucet", function () {
   let Token;
   let schusterToken;
   let Faucet;
@@ -51,7 +52,7 @@ describe("SchusterianTestFaucet", function () {
     it("Should only allow the owner to set the timeout time", async function () {
         await faucet.setTimeout(20); //Succeeds
         await expect(
-          faucet.connect(addr1).setTimeout(20) //Fails
+          faucet.connect(addr1).setTimeout(40) //Fails
         ).to.be.revertedWith("Ownable: caller is not the owner")
     })
   })
