@@ -1,5 +1,7 @@
 .DS_STORE
 node_modules
+cache
+.vscode
 scripts/flow/*/.flowconfig
 .flowconfig
 *~
