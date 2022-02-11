@@ -1,4 +1,5 @@
 const { expect } = require("chai");
+const { network } = require("hardhat");
 require('dotenv').config();
 
 describe("SchusterEtherFaucet", function () {
@@ -63,6 +64,28 @@ describe("SchusterEtherFaucet", function () {
   })
 
   describe('Faucet', function () {
+    it('Should return the accurate tokenAddress', async function () {
+      const currenERC20TokenAddress = await faucet.getERC20TokenAddress();
+      const deployedERC20TokenAddress = await schusterToken.address;
+      expect(currenERC20TokenAddress).to.equal(deployedERC20TokenAddress);
+    })   
+
+    it('Should return the accurate Faucet Drip Amount', async function () {
+      const currentFaucetDripAmount = await faucet.getFaucetDripAmount();
+      const varFaucetDripAmount = faucetDripBase*(10**faucetDripDecimal);
+      expect(String(currentFaucetDripAmount)).to.equal(String(varFaucetDripAmount));
+    })
+
+    it('Should return the accurate Timeout', async function () {
+      const currentTimeout = await faucet.getTimeout();
+      expect(currentTimeout).to.equal(timeout);
+    })   
+
+    it('Should return the accurate ERC20 Token Minimum', async function () {
+      const currentERC20TokenMinimum = await faucet.getERC20TokenMinimum();
+      expect(String(currentERC20TokenMinimum)).to.equal(String(ERC20TokenMinimum*(10**18)));
+    })   
+    
     it('Should not send funds if there are no tokens to give', async function () {
       await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
         'Insufficient Faucet Funds'
@@ -150,6 +173,42 @@ describe("SchusterEtherFaucet", function () {
       )
 
       await faucet.faucet(addr2.address) //Success
+    })
+
+    it('Should check if the timeout is present after a faucet call is made', async function () {
+      // Send 100 ETH to the faucet to prime it
+      const transactionHash = await owner.sendTransaction({
+        to: faucet.address,
+        value: ethers.utils.parseEther('100.0'),
+      })
+      
+      const preFaucetTimeout = await faucet.getAddressTimeout(addr1.address);
+
+      await faucet.faucet(addr1.address);
+
+      const postFaucetTimeout = await faucet.getAddressTimeout(addr1.address);
+
+      expect(preFaucetTimeout).to.be.below(postFaucetTimeout);
+      
+    })
+
+    it('Should emit an event once a transfer is made', async function () {
+      // Send 100 ETH to the faucet to prime it
+      const transactionHash = await owner.sendTransaction({
+        to: faucet.address,
+        value: ethers.utils.parseEther('100.0'),
+      })
+
+      async function getCurrentBlockTimestamp() {
+        const currentBlockNumber = await ethers.provider.getBlockNumber();
+        const currentBlockData = await ethers.provider.getBlock(currentBlockNumber);
+        return currentBlockData.timestamp;
+      }
+      
+      expect(await faucet.faucet(addr1.address))
+        .to.emit(faucet, "sentTokens")
+        .withArgs(addr1.address, await getCurrentBlockTimestamp());
+
     })
   })
 })
