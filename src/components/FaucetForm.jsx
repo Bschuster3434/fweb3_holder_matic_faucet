@@ -62,11 +62,12 @@ export const FaucetForm = () => {
   const _handleSubmit = async () => {
     try {
       setState({ ...state, loading: true })
-      // TODO: call contract here
+
+      // HERE: call contract here
       const contractResponse = await faucetContract.getBalance()
       console.log({ contractResponse })
+
       setState({ ...state, loading: false })
-      console.log({ state })
     } catch (e) {
       setState({ ...state, loading: false, error: e.messge })
     }
