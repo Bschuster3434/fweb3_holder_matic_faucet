@@ -1,9 +1,7 @@
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
-import { useWeb3React } from '@web3-react/core'
 import { FaFaucet } from 'react-icons/fa'
 import { useState } from 'react'
 
-import { faucetContract } from '../lib/web3'
 import styled from 'styled-components'
 import { COLORS } from '../constants'
 
@@ -53,35 +51,22 @@ const defaultState = {
 export const FaucetForm = () => {
   const [state, setState] = useState(defaultState)
 
-  const { active } = useWeb3React()
-
-  const _handleChange = ({ target }) => {
-    setState({ ...state, [target.name]: target.value })
-  }
 
   const _handleSubmit = async () => {
-    try {
-      setState({ ...state, loading: true })
-
-      // HERE: call contract here
-      const contractResponse = await faucetContract.getBalance()
-      console.log({ contractResponse })
-
-      setState({ ...state, loading: false })
-    } catch (e) {
-      setState({ ...state, loading: false, error: e.messge })
-    }
+    // try {
+    //   setState({ ...state, loading: true })
+    //   console.log('account', account)
+    //   const tx = await sendMaticFromFaucet(account)
+    //   console.log({ tx })
+    //   setState({ ...state, loading: false })
+    // } catch (e) {
+    //   setState({ ...state, loading: false, error: e.messge })
+    // }
   }
   const { loading, ethAddress } = state
-  return active ? (
+  return true ? (
     <InputContainer>
       <Faucet />
-      <Input
-        name='eth-address'
-        placeholder='Receive Address'
-        value={ethAddress}
-        onChange={_handleChange}
-      />
       <SubmitButton onClick={_handleSubmit}>
         {loading ? <Loading /> : 'Submit'}
       </SubmitButton>
