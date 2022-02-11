@@ -10,14 +10,23 @@ describe("SchusterEtherFaucet", function () {
   let addr1;
   let addr2;
   let addrs;
+  let faucetDripBase;
+  let faucetDripDecimal;
+  let ERC20TokenMinimum;
+  let timeout;
 
   beforeEach(async function () {
     Token = await ethers.getContractFactory("SchusterTestToken");
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
     schusterToken = await Token.deploy();
 
+    faucetDripBase = 1;
+    faucetDripDecimal = 18;
+    ERC20TokenMinimum = 300;
+    timeout = 60;
+
     Faucet = await ethers.getContractFactory("SchusterEtherFaucet");
-    faucet = await Faucet.deploy(schusterToken.address);
+    faucet = await Faucet.deploy(schusterToken.address, faucetDripBase, faucetDripDecimal, ERC20TokenMinimum, timeout);
 
     const transactionHashToken = await schusterToken.transfer(addr1.address, ethers.utils.parseEther("300"));
   });

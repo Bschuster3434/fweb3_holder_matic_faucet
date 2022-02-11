@@ -222,8 +222,8 @@
       ]
     },
     "E:\\Solidity Projects\\fweb3_holder_matic_faucet\\contracts\\SchusterEtherFaucet.sol": {
-      "lastModificationDate": 1644438934199,
-      "contentHash": "b2f0aa8e475068694f6adb458d414330",
+      "lastModificationDate": 1644502327321,
+      "contentHash": "c518ccf41b1d9c90d3f4da87be40f994",
       "sourceName": "contracts/SchusterEtherFaucet.sol",
       "solcConfig": {
         "version": "0.8.0",
