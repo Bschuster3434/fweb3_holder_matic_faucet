@@ -1,4 +1,5 @@
 const { expect } = require("chai");
+const { network } = require("hardhat");
 require('dotenv').config();
 
 describe("SchusterEtherFaucet", function () {
@@ -187,10 +188,27 @@ describe("SchusterEtherFaucet", function () {
 
       const postFaucetTimeout = await faucet.getAddressTimeout(addr1.address);
 
-      console.log(preFaucetTimeout, postFaucetTimeout);
-
       expect(preFaucetTimeout).to.be.below(postFaucetTimeout);
       
+    })
+
+    it('Should emit an event once a transfer is made', async function () {
+      // Send 100 ETH to the faucet to prime it
+      const transactionHash = await owner.sendTransaction({
+        to: faucet.address,
+        value: ethers.utils.parseEther('100.0'),
+      })
+
+      async function getCurrentBlockTimestamp() {
+        const currentBlockNumber = await ethers.provider.getBlockNumber();
+        const currentBlockData = await ethers.provider.getBlock(currentBlockNumber);
+        return currentBlockData.timestamp;
+      }
+      
+      expect(await faucet.faucet(addr1.address))
+        .to.emit(faucet, "sentTokens")
+        .withArgs(addr1.address, await getCurrentBlockTimestamp());
+
     })
   })
 })

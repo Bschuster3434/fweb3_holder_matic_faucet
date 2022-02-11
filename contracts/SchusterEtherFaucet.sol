@@ -10,7 +10,7 @@ contract SchusterEtherFaucet {
     uint private ERC20TokenMinimum; //Minimum amount of tokens needs to be considered for this faucet
     mapping(address => uint) timeouts; //Time of last faucet drip per address
 
-    event sentTokens(address _user, uint _timestamp);
+    event sentTokens(address indexed _user, uint _timestamp);
 
     constructor(address _ERC20TokenAddress, uint _faucetDripBase, uint _faucetDripDecimal, uint _ERC20TokenMinimum, uint _timeout) {
         ERC20TokenAddress = _ERC20TokenAddress; 
