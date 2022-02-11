@@ -32,6 +32,30 @@ What should the contract be able to do?
 - If the faucet is empty, it returns an error
 - If the users has received tokens recently, it returns an error
 
+---
+## Front End React
+- node v16
+- React 17
+
+```bash
+# use node v16
+nvm use
+# install deps
+yarn install
+# run dev server
+yarn start
+# build prod
+yarn build
+```
+## Front End Notes / Tooling:
+
+use yarn for preformance optimizations over npm
+- [yarn](https://yarnpkg.com/)
+
+use nvm for managing node version
+- [nvm](https://github.com/nvm-sh/nvm)
+
+---
 ## Future To Do Items
 - Get a Github Actions Pipeline Setup
 - Support Environment Variables to Switch Out Contracts in Dev, Test and Prod

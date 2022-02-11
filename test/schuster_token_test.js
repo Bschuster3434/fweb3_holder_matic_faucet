@@ -16,9 +16,9 @@ describe("SchusterEtherFaucet", function () {
   let timeout;
 
   beforeEach(async function () {
-    Token = await ethers.getContractFactory("SchusterTestToken");
-    [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
-    schusterToken = await Token.deploy();
+    Token = await ethers.getContractFactory('SchusterTestToken')
+    ;[owner, addr1, addr2, ...addrs] = await ethers.getSigners()
+    schusterToken = await Token.deploy()
 
     faucetDripBase = 1;
     faucetDripDecimal = 18;
@@ -28,130 +28,139 @@ describe("SchusterEtherFaucet", function () {
     Faucet = await ethers.getContractFactory("SchusterEtherFaucet");
     faucet = await Faucet.deploy(schusterToken.address, faucetDripBase, faucetDripDecimal, ERC20TokenMinimum, timeout);
 
-    const transactionHashToken = await schusterToken.transfer(addr1.address, ethers.utils.parseEther("300"));
-  });
+    const transactionHashToken = await schusterToken.transfer(
+      addr1.address,
+      ethers.utils.parseEther('300')
+    )
+  })
 
-  describe("Faucet Supply", function () {   
+  describe('Faucet Supply', function () {
     beforeEach(async function () {
-        // Send 100 ETH to the faucet to prime it
-        const transactionHash = await owner.sendTransaction({
-          to: faucet.address,
-          value: ethers.utils.parseEther("100.0"),
-      });
-    });
+      // Send 100 ETH to the faucet to prime it
+      const transactionHash = await owner.sendTransaction({
+        to: faucet.address,
+        value: ethers.utils.parseEther('100.0'),
+      })
+    })
 
-    it("Should have 100 Ethereum", async function () {
-      const initialBalance = await faucet.getBalance();
-      expect(initialBalance).to.equal(ethers.utils.parseEther("100"));
-    });
+    it('Should have 100 Ethereum', async function () {
+      const initialBalance = await faucet.getBalance()
+      expect(initialBalance).to.equal(ethers.utils.parseEther('100'))
+    })
 
-    it("Should increase if another person sends tokens", async function () {
-      const initialBalance = await faucet.getBalance();
+    it('Should increase if another person sends tokens', async function () {
+      const initialBalance = await faucet.getBalance()
       const tx = await addr1.sendTransaction({
         to: faucet.address,
-        value: ethers.utils.parseEther("1.0")
+        value: ethers.utils.parseEther('1.0'),
       })
 
-      const newBalance = await faucet.getBalance();
-      expect(newBalance).to.equal(initialBalance.add(ethers.utils.parseEther("1.0")));
-    });
-  });
-
-  describe("Owner Functions", function () {
-    it("Should only allow the owner to set the timeout time", async function () {
-        await faucet.setTimeout(20); //Succeeds
-        await expect(
-          faucet.connect(addr1).setTimeout(40) //Fails
-        ).to.be.revertedWith("Ownable: caller is not the owner")
+      const newBalance = await faucet.getBalance()
+      expect(newBalance).to.equal(
+        initialBalance.add(ethers.utils.parseEther('1.0'))
+      )
     })
   })
 
-  describe("Faucet", function () {
-    it("Should not send funds if there are no tokens to give", async function () {
+  describe('Owner Functions', function () {
+    it('Should only allow the owner to set the timeout time', async function () {
+      await faucet.setTimeout(20) //Succeeds
       await expect(
-        faucet.faucet(addr1.address)
-      ).to.be.revertedWith("Insufficient Faucet Funds");
-      
+        faucet.connect(addr1).setTimeout(40) //Fails
+      ).to.be.revertedWith('Ownable: caller is not the owner')
+    })
+  })
+
+  describe('Faucet', function () {
+    it('Should not send funds if there are no tokens to give', async function () {
+      await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
+        'Insufficient Faucet Funds'
+      )
+
       const transactionHash0 = await owner.sendTransaction({
         to: faucet.address,
-        value: ethers.utils.parseEther("0.5"),
-      });
+        value: ethers.utils.parseEther('0.5'),
+      })
 
-      await expect(
-        faucet.faucet(addr1.address)
-      ).to.be.revertedWith("Insufficient Faucet Funds");
+      await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
+        'Insufficient Faucet Funds'
+      )
 
       const transactionHash1 = await owner.sendTransaction({
         to: faucet.address,
-        value: ethers.utils.parseEther("0.5"),
-      });
+        value: ethers.utils.parseEther('0.5'),
+      })
 
-      await faucet.faucet(addr1.address); // Success
-
+      await faucet.faucet(addr1.address) // Success
     })
 
-    it("Should Send 1 Ether to Person Who Asks", async function () {
+    it('Should Send 1 Ether to Person Who Asks', async function () {
       // Send 100 ETH to the faucet to prime it
       const transactionHash = await owner.sendTransaction({
         to: faucet.address,
-        value: ethers.utils.parseEther("100.0"),
-      });
+        value: ethers.utils.parseEther('100.0'),
+      })
 
-      const addr1InitialBalance = await addr1.getBalance();
+      const addr1InitialBalance = await addr1.getBalance()
 
-      await faucet.faucet(addr1.address);
+      await faucet.faucet(addr1.address)
 
-      const addr1NewBalance = await addr1.getBalance(); 
+      const addr1NewBalance = await addr1.getBalance()
 
-      expect(addr1NewBalance).to.equal(addr1InitialBalance.add(ethers.utils.parseEther("1.0")));
-    });
+      expect(addr1NewBalance).to.equal(
+        addr1InitialBalance.add(ethers.utils.parseEther('1.0'))
+      )
+    })
 
-    it("Should Not Send Ether before Timeout, but should after the timeout", async function () {
+    it('Should Not Send Ether before Timeout, but should after the timeout', async function () {
       // Send 100 ETH to the faucet to prime it
       const transactionHash = await owner.sendTransaction({
         to: faucet.address,
-        value: ethers.utils.parseEther("100.0"),
-      });
+        value: ethers.utils.parseEther('100.0'),
+      })
 
-      await faucet.setTimeout(1440); //Set timeout to be 24 hours
+      await faucet.setTimeout(1440) //Set timeout to be 24 hours
 
-      await faucet.faucet(addr1.address); //Success
-      await expect(
-        faucet.faucet(addr1.address)
-      ).to.be.revertedWith("Too Early for Another Faucet Drop"); //Failure
+      await faucet.faucet(addr1.address) //Success
+      await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
+        'Too Early for Another Faucet Drop'
+      ) //Failure
 
-      await network.provider.send("evm_increaseTime", [3600 * 12]);
-      await expect(
-        faucet.faucet(addr1.address)
-      ).to.be.revertedWith("Too Early for Another Faucet Drop"); //Failure
+      await network.provider.send('evm_increaseTime', [3600 * 12])
+      await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
+        'Too Early for Another Faucet Drop'
+      ) //Failure
 
-      await network.provider.send("evm_increaseTime", [3600 * 12]);
-      await faucet.faucet(addr1.address); //Success
-    });
+      await network.provider.send('evm_increaseTime', [3600 * 12])
+      await faucet.faucet(addr1.address) //Success
+    })
 
-  it("Should not send tokens if there is insufficient ERC20 tokens", async function () {
-    // Send 100 ETH to the faucet to prime it
-    const transactionHash = await owner.sendTransaction({
-      to: faucet.address,
-      value: ethers.utils.parseEther("100.0"),
-    });
+    it('Should not send tokens if there is insufficient ERC20 tokens', async function () {
+      // Send 100 ETH to the faucet to prime it
+      const transactionHash = await owner.sendTransaction({
+        to: faucet.address,
+        value: ethers.utils.parseEther('100.0'),
+      })
 
-    await expect(
-      faucet.faucet(addr2.address)
-    ).to.be.revertedWith("You Do Not Have Enough ERC20 tokens"); //Fail
+      await expect(faucet.faucet(addr2.address)).to.be.revertedWith(
+        'You Do Not Have Enough ERC20 tokens'
+      ) //Fail
 
-    const transactionHashToken0 = await schusterToken.transfer(addr2.address, ethers.utils.parseEther("100"));
+      const transactionHashToken0 = await schusterToken.transfer(
+        addr2.address,
+        ethers.utils.parseEther('100')
+      )
 
-    await expect(
-      faucet.faucet(addr2.address)
-    ).to.be.revertedWith("You Do Not Have Enough ERC20 tokens"); //Fail
+      await expect(faucet.faucet(addr2.address)).to.be.revertedWith(
+        'You Do Not Have Enough ERC20 tokens'
+      ) //Fail
 
-    const transactionHashToken1 = await schusterToken.transfer(addr2.address, ethers.utils.parseEther("200"));
+      const transactionHashToken1 = await schusterToken.transfer(
+        addr2.address,
+        ethers.utils.parseEther('200')
+      )
 
-    await faucet.faucet(addr2.address); //Success
-
-  });
-
-
-  });
-});
+      await faucet.faucet(addr2.address) //Success
+    })
+  })
+})
