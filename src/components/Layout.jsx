@@ -8,9 +8,4 @@ const Container = styled.div`
   color: ${COLORS.secondard};
 `
 
-export const Layout = ({ children }) => (
-  <Container>
-    {children}
-  </Container>
-)
-
+export const Layout = ({ children }) => <Container>{children}</Container>

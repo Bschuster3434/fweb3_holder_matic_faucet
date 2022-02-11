@@ -65,7 +65,7 @@ export const ConnectButton = () => {
     <MetaMaskContainer>
       <ConnectMetaMaskButton onClick={_handleConnect}>
         {renderConnected(active)}
-        {loading ? 'connecting...' :  active ? 'connected' : 'Connect metamask'}
+        {loading ? 'connecting...' : active ? 'connected' : 'Connect metamask'}
       </ConnectMetaMaskButton>
     </MetaMaskContainer>
   )
