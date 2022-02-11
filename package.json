@@ -4,7 +4,15 @@
   "description": "A MATIC Faucet for FWEB3 Holders",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "hard": "npx hardhat",
+    "hard:node": "yarn hard node",
+    "hard:compile": "yarn hard compile",
+    "hard:accounts": "yarn hard accounts",
+    "hard:test": "yarn hard test"
   },
   "repository": {
     "type": "git",
@@ -16,17 +24,46 @@
   "bugs": {
     "url": "https://github.com/Bschuster3434/fweb3_holder_matic_faucet/issues"
   },
-  "homepage": "https://github.com/Bschuster3434/fweb3_holder_matic_faucet#readme",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.4",
     "@nomiclabs/hardhat-waffle": "^2.0.2",
     "@openzeppelin/contracts": "^4.4.2",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "chai": "^4.3.6",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.4",
     "hardhat": "^2.8.3"
   },
   "dependencies": {
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-scripts": "^5.0.0",
+    "styled-components": "^5.3.3",
+    "web-vitals": "^2.1.4"
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
