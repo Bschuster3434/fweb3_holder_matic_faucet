@@ -68,7 +68,6 @@ export const FaucetForm = () => {
       console.log({ contractResponse })
 
       setState({ ...state, loading: false })
-      console.log({ state })
     } catch (e) {
       setState({ ...state, loading: false, error: e.messge })
     }
