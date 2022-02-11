@@ -15,6 +15,11 @@ async function main() {
     const Faucet = await ethers.getContractFactory("SchusterEtherFaucet");
     const faucet = await Faucet.deploy(token_address, faucetDripBase, faucetDripDecimal, ERC20TokenMinimum, timeout);
 
+    const fiilFaucetTx = await deployer.sendTransaction({
+      to: faucet.address,
+      value: ethers.utils.parseEther('1'),
+    })
+
     console.log("ERC20 Token address:", token_address);
     console.log("Faucet address: ", faucet.address);
     console.log("ERC 20 Token Miniumum Require: ", ERC20TokenMinimum);
