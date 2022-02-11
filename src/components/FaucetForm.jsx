@@ -1,7 +1,7 @@
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FaFaucet } from 'react-icons/fa'
 import { useState } from 'react'
-
+import { useEthers, faucetContract } from '../lib'
 import styled from 'styled-components'
 import { COLORS } from '../constants'
 
@@ -10,23 +10,6 @@ const InputContainer = styled.div`
   align-items: center;
 `
 
-const Input = styled.input`
-  height: 48px;
-  padding: 0 0 0 1rem;
-  margin: 0;
-  width: 100%;
-  background: ${COLORS.background};
-  color: ${COLORS.primary};
-  border: none;
-
-  ::placeholder,
-  ::-webkit-input-placeholder {
-    color: ${COLORS.primary};
-  }
-  :-ms-input-placeholder {
-    color: ${COLORS.primary};
-  }
-`
 
 const SubmitButton = styled.button`
   height: 48px;
@@ -44,26 +27,24 @@ const Faucet = styled(FaFaucet)`
 `
 const Loading = styled(AiOutlineLoading3Quarters)``
 
-const defaultState = {
-  loading: false,
-}
 
 export const FaucetForm = () => {
-  const [state, setState] = useState(defaultState)
-
+  const [loading, setLoading] = useState(false)
+  const etherState = useEthers()
 
   const _handleSubmit = async () => {
-    // try {
-    //   setState({ ...state, loading: true })
-    //   console.log('account', account)
-    //   const tx = await sendMaticFromFaucet(account)
-    //   console.log({ tx })
-    //   setState({ ...state, loading: false })
-    // } catch (e) {
-    //   setState({ ...state, loading: false, error: e.messge })
-    // }
+    try {
+      setLoading(true)
+      const contractInstance = faucetContract(etherState.signer)
+      const getTimeout = await contractInstance.getTimeout()
+      console.log('drip amount', getTimeout)
+      setLoading(false)
+    } catch (e) {
+      setLoading(false)
+      console.error('error', e.message)
+    }
   }
-  const { loading, ethAddress } = state
+
   return true ? (
     <InputContainer>
       <Faucet />
