@@ -1,24 +1,32 @@
-require('dotenv').config()
+const { expect } = require("chai");
+require('dotenv').config();
 
-const { expect } = require('chai')
-
-describe('SchusterEtherFaucet', function () {
-  // let Token
-  let schusterToken
-  let Faucet
-  let faucet
-  let owner
-  let addr1
-  let addr2
-  let addrs
+describe("SchusterEtherFaucet", function () {
+  let Token;
+  let schusterToken;
+  let Faucet;
+  let faucet;
+  let owner;
+  let addr1;
+  let addr2;
+  let addrs;
+  let faucetDripBase;
+  let faucetDripDecimal;
+  let ERC20TokenMinimum;
+  let timeout;
 
   beforeEach(async function () {
     Token = await ethers.getContractFactory('SchusterTestToken')
     ;[owner, addr1, addr2, ...addrs] = await ethers.getSigners()
     schusterToken = await Token.deploy()
 
-    Faucet = await ethers.getContractFactory('SchusterEtherFaucet')
-    faucet = await Faucet.deploy(schusterToken.address)
+    faucetDripBase = 1;
+    faucetDripDecimal = 18;
+    ERC20TokenMinimum = 300;
+    timeout = 60;
+
+    Faucet = await ethers.getContractFactory("SchusterEtherFaucet");
+    faucet = await Faucet.deploy(schusterToken.address, faucetDripBase, faucetDripDecimal, ERC20TokenMinimum, timeout);
 
     const transactionHashToken = await schusterToken.transfer(
       addr1.address,
@@ -51,15 +59,6 @@ describe('SchusterEtherFaucet', function () {
       expect(newBalance).to.equal(
         initialBalance.add(ethers.utils.parseEther('1.0'))
       )
-    })
-  })
-
-  describe('Owner Functions', function () {
-    it('Should only allow the owner to set the timeout time', async function () {
-      await faucet.setTimeout(20) //Succeeds
-      await expect(
-        faucet.connect(addr1).setTimeout(40) //Fails
-      ).to.be.revertedWith('Ownable: caller is not the owner')
     })
   })
 
@@ -111,19 +110,17 @@ describe('SchusterEtherFaucet', function () {
         value: ethers.utils.parseEther('100.0'),
       })
 
-      await faucet.setTimeout(1440) //Set timeout to be 24 hours
-
       await faucet.faucet(addr1.address) //Success
       await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
         'Too Early for Another Faucet Drop'
       ) //Failure
 
-      await network.provider.send('evm_increaseTime', [3600 * 12])
+      await network.provider.send('evm_increaseTime', [60 * 30]) // 60 seconds times 30
       await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
         'Too Early for Another Faucet Drop'
       ) //Failure
 
-      await network.provider.send('evm_increaseTime', [3600 * 12])
+      await network.provider.send('evm_increaseTime', [60 * 30])
       await faucet.faucet(addr1.address) //Success
     })
 
