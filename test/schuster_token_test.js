@@ -62,15 +62,6 @@ describe("SchusterEtherFaucet", function () {
     })
   })
 
-  describe('Owner Functions', function () {
-    it('Should only allow the owner to set the timeout time', async function () {
-      await faucet.setTimeout(20) //Succeeds
-      await expect(
-        faucet.connect(addr1).setTimeout(40) //Fails
-      ).to.be.revertedWith('Ownable: caller is not the owner')
-    })
-  })
-
   describe('Faucet', function () {
     it('Should not send funds if there are no tokens to give', async function () {
       await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
@@ -119,19 +110,17 @@ describe("SchusterEtherFaucet", function () {
         value: ethers.utils.parseEther('100.0'),
       })
 
-      await faucet.setTimeout(1440) //Set timeout to be 24 hours
-
       await faucet.faucet(addr1.address) //Success
       await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
         'Too Early for Another Faucet Drop'
       ) //Failure
 
-      await network.provider.send('evm_increaseTime', [3600 * 12])
+      await network.provider.send('evm_increaseTime', [60 * 30]) // 60 seconds times 30
       await expect(faucet.faucet(addr1.address)).to.be.revertedWith(
         'Too Early for Another Faucet Drop'
       ) //Failure
 
-      await network.provider.send('evm_increaseTime', [3600 * 12])
+      await network.provider.send('evm_increaseTime', [60 * 30])
       await faucet.faucet(addr1.address) //Success
     })
 

@@ -1,9 +1,8 @@
 pragma solidity ^0.8.0 <=0.9.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract SchusterEtherFaucet is Ownable {
+contract SchusterEtherFaucet {
 
     address private tokenAddress; //Address of the ERC20 Token we're tracking
     uint256 private faucetDripAmount; //Amount to be sent
@@ -18,10 +17,6 @@ contract SchusterEtherFaucet is Ownable {
         faucetDripAmount = _faucetDripBase * (10**_faucetDripDecimal); //Ether (or Native Token)
         ERC20TokenMinimum = _ERC20TokenMinimum * (10**18); //300 ERC20 Tokens, assuming 18 decimals
         timeout = _timeout; //Timeout in minutes
-    }
-
-    function setTimeout(uint _minutes) external onlyOwner {
-        timeout = _minutes;
     }
 
     function getTimeout() external view returns(uint) {

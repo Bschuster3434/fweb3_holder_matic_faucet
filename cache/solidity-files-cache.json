@@ -222,8 +222,8 @@
       ]
     },
     "E:\\Solidity Projects\\fweb3_holder_matic_faucet\\contracts\\SchusterEtherFaucet.sol": {
-      "lastModificationDate": 1644502327321,
-      "contentHash": "c518ccf41b1d9c90d3f4da87be40f994",
+      "lastModificationDate": 1644586941881,
+      "contentHash": "63c731c55f4484dfd11822d7d2cd6658",
       "sourceName": "contracts/SchusterEtherFaucet.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -249,7 +249,6 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/access/Ownable.sol",
         "@openzeppelin/contracts/token/ERC20/ERC20.sol"
       ],
       "versionPragmas": [
