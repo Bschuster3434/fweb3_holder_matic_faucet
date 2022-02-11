@@ -8,10 +8,12 @@ require("@nomiclabs/hardhat-ethers");
  */
 
 const {
-  ALCHEMY_POLYGON_MUMBAI_API_KEY,
+  ALCHEMY_POLYGON_API_KEY,
   METAMASK_TEST_ACCOUNT_3_PRIK,
   METAMASK_TEST_ACCOUNT_4_PRIK,
-  METAMASK_TEST_ACCOUNT_5_PRIK
+  METAMASK_TEST_ACCOUNT_5_PRIK,
+  TEST_NETWORK_BASE_URL,
+  // PROD_NETWORK_BASE_URL
 } = process.env
 
 // eslint-disable-next-line
@@ -27,7 +29,7 @@ module.exports = {
   solidity: "0.8.0",
   networks: {
     polygon_mumbai: {
-      url: `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_POLYGON_MUMBAI_API_KEY}`,
+      url: `${TEST_NETWORK_BASE_URL}/${ALCHEMY_POLYGON_API_KEY}`,
       accounts: [`${METAMASK_TEST_ACCOUNT_3_PRIK}`,`${METAMASK_TEST_ACCOUNT_4_PRIK}`,`${METAMASK_TEST_ACCOUNT_5_PRIK}`]
     }
   }
