@@ -1,13 +1,14 @@
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FaFaucet } from 'react-icons/fa'
 import { useState } from 'react'
-import { useEthers, faucetContract } from '../lib'
+import { useEthers } from '../lib'
 import styled from 'styled-components'
 import { COLORS } from '../constants'
 
 const InputContainer = styled.div`
   display: flex;
   align-items: center;
+  width: 200%;
 `
 
 
@@ -30,14 +31,14 @@ const Loading = styled(AiOutlineLoading3Quarters)``
 
 export const FaucetForm = () => {
   const [loading, setLoading] = useState(false)
-  const etherState = useEthers()
+  const { contract } = useEthers()
 
   const _handleSubmit = async () => {
     try {
       setLoading(true)
-      const contractInstance = faucetContract(etherState.signer)
-      const getTimeout = await contractInstance.getTimeout()
-      console.log('drip amount', getTimeout)
+      // const contractInstance = etherState.contract(etherState.signer)
+      const getTimeout = await contract.getTimeout()
+      console.log({ getTimeout })
       setLoading(false)
     } catch (e) {
       setLoading(false)

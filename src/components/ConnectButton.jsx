@@ -1,6 +1,5 @@
 import { GiUnplugged } from 'react-icons/gi'
 import { GiPlug } from 'react-icons/gi'
-import { useState } from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../constants'
 import { useEthers } from '../lib/useEthers'
@@ -36,16 +35,9 @@ const renderConnected = (connected) => {
   )
 }
 
-const defaultState = {
-  loading: false,
-}
-
-
-
 export const ConnectButton = () => {
-  const ethers = useEthers()
-  const { activate, connecting, address } = ethers
-  console.log({ ethers })
+  const { activate, connecting, address } = useEthers()
+
   const _handleConnect = async () => {
     await activate()
   }
