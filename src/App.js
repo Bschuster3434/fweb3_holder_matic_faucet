@@ -5,6 +5,7 @@ import {
   FaucetForm,
   Title,
   InstallMetaMask,
+  DataDetails
 } from './components'
 
 import { isWeb3Available, useEthers } from './lib'
@@ -18,6 +19,7 @@ function App() {
       <Title />
       <FaucetForm {...ethersState} />
       <Error {...ethersState} />
+      <DataDetails {...ethersState} />
     </Layout>
   ) : (
     <InstallMetaMask />
