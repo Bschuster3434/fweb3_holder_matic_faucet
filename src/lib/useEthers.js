@@ -4,7 +4,10 @@ import { ethers } from 'ethers'
 import contract from '../contracts/SchusterEtherFaucet.json'
 import { isWeb3Available } from './web3.utils'
 
-const { REACT_APP_FAUCET_CONTRACT_ADDRESS, REACT_APP_METAMASK_TEST_ACCOUNT_3_PRIK} = process.env
+const {
+  REACT_APP_FAUCET_CONTRACT_ADDRESS,
+  REACT_APP_FAUCET_ACCOUNT_PRIVATE_KEY,
+} = process.env
 
 export const useEthers = () => {
   const [state, setState] = useState({
@@ -26,7 +29,10 @@ export const useEthers = () => {
         const addresses = await provider.listAccounts()
 
         //Creates a Wallet from the Runner's Private Key and connects to the contract
-        const wallet = new ethers.Wallet(REACT_APP_METAMASK_TEST_ACCOUNT_3_PRIK, provider);
+        const wallet = new ethers.Wallet(
+          REACT_APP_FAUCET_ACCOUNT_PRIVATE_KEY,
+          provider
+        )
         const faucetContract = new ethers.Contract(
           REACT_APP_FAUCET_CONTRACT_ADDRESS,
           contract.abi,
@@ -46,7 +52,7 @@ export const useEthers = () => {
           contractBalance,
           contract: faucetContract,
           connected: true,
-          ERC20MinTokens
+          ERC20MinTokens,
         })
       }
     } catch (e) {
@@ -55,7 +61,7 @@ export const useEthers = () => {
     }
   }
   const setError = (error) => {
-    setState({ ...state, error, sending: false  })
+    setState({ ...state, error, sending: false })
   }
   const setSending = (sending) => {
     setState({ ...state, sending })
