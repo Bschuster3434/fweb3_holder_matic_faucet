@@ -1,10 +1,5 @@
-import { UserRejectedRequestError } from '@web3-react/injected-connector'
-import { useWeb3React } from '@web3-react/core'
 import { GiUnplugged } from 'react-icons/gi'
-import { injected } from '../lib/connectors'
 import { GiPlug } from 'react-icons/gi'
-import { useState } from 'react'
-
 import styled from 'styled-components'
 import { COLORS } from '../constants'
 
@@ -30,42 +25,21 @@ const ConnectIndicator = styled.span`
   padding: 0 1rem 0 0;
 `
 
-const renderConnected = (connected) => {
-  const color = connected ? 'green' : 'red'
+const renderConnected = (address) => {
+  const color = address ? 'green' : 'red'
   return (
     <ConnectIndicator color={color}>
-      {connected ? <Plug /> : <UnPlugged />}
+      {address ? <Plug /> : <UnPlugged />}
     </ConnectIndicator>
   )
 }
 
-const defaultState = {
-  loading: false,
-}
-
-export const ConnectButton = () => {
-  const [state, setState] = useState(defaultState)
-  const { active, error, activate, setError } = useWeb3React()
-
-  const _handleConnect = async () => {
-    try {
-      setState({ ...state, loading: true })
-      await activate(injected, undefined, true)
-      setState({ ...state, loading: false })
-    } catch (e) {
-      console.error(e.message)
-      e instanceof UserRejectedRequestError
-        ? setState({ ...state, loading: false })
-        : setError(error)
-    }
-  }
-  const { loading } = state
-
+export const ConnectButton = ({ activate, connecting, addresses }) => {
   return (
     <MetaMaskContainer>
-      <ConnectMetaMaskButton onClick={_handleConnect}>
-        {renderConnected(active)}
-        {loading ? 'connecting...' : active ? 'connected' : 'Connect metamask'}
+      <ConnectMetaMaskButton onClick={() => activate()}>
+        {renderConnected(addresses[0])}
+        {connecting ? 'connecting...' : addresses[0] ? 'connected' : 'Connect metamask'}
       </ConnectMetaMaskButton>
     </MetaMaskContainer>
   )

@@ -1,92 +1,72 @@
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
-import { useWeb3React } from '@web3-react/core'
 import { FaFaucet } from 'react-icons/fa'
-import { useState } from 'react'
-
-import { faucetContract } from '../lib/web3'
 import styled from 'styled-components'
+
 import { COLORS } from '../constants'
 
 const InputContainer = styled.div`
   display: flex;
   align-items: center;
-`
-
-const Input = styled.input`
-  height: 48px;
-  padding: 0 0 0 1rem;
-  margin: 0;
-  width: 100%;
-  background: ${COLORS.background};
-  color: ${COLORS.primary};
-  border: none;
-
-  ::placeholder,
-  ::-webkit-input-placeholder {
-    color: ${COLORS.primary};
-  }
-  :-ms-input-placeholder {
-    color: ${COLORS.primary};
-  }
+  justify-content: center;
 `
 
 const SubmitButton = styled.button`
-  height: 48px;
   border: none;
   padding: 1rem;
-  background: ${COLORS.background};
+  background-color: ${COLORS.background};
+`
+
+const SubmitText = styled.h1`
+  font-size: 2rem;
   color: ${COLORS.primary};
 `
 
-const Faucet = styled(FaFaucet)`
+const Faucet = styled(({ size }) => (
+  <FaFaucet size={size} color={COLORS.primary} />
+))`
   padding: 1rem;
-  background: white;
-  color: ${COLORS.primary};
-  background: ${COLORS.background};
 `
-const Loading = styled(AiOutlineLoading3Quarters)``
 
-const defaultState = {
-  loading: false,
-}
-
-export const FaucetForm = () => {
-  const [state, setState] = useState(defaultState)
-
-  const { active } = useWeb3React()
-
-  const _handleChange = ({ target }) => {
-    setState({ ...state, [target.name]: target.value })
-  }
-
+const ConnectMetaMaskText = styled.h1`
+  align-self: center;
+  color: ${COLORS.primary};
+`
+export const FaucetForm = ({
+  addresses,
+  contract,
+  connecting,
+  setError,
+  sending,
+  setSending,
+}) => {
   const _handleSubmit = async () => {
     try {
-      setState({ ...state, loading: true })
-
-      // HERE: call contract here
-      const contractResponse = await faucetContract.getBalance()
-      console.log({ contractResponse })
-
-      setState({ ...state, loading: false })
+      console.log('handle submit', contract)
+      // TODO: check if sent / display message
+      setSending(true)
+      const faucetResponse = await contract.faucet(addresses[0])
+      console.log({ faucetResponse })
+      setSending(false)
     } catch (e) {
-      setState({ ...state, loading: false, error: e.messge })
+      console.error('error', e.message)
+      setError(e.message)
     }
   }
-  const { loading, ethAddress } = state
-  return active ? (
+  return addresses[0] ? (
     <InputContainer>
-      <Faucet />
-      <Input
-        name='eth-address'
-        placeholder='Receive Address'
-        value={ethAddress}
-        onChange={_handleChange}
-      />
-      <SubmitButton onClick={_handleSubmit}>
-        {loading ? <Loading /> : 'Submit'}
+      <SubmitButton
+        onClick={_handleSubmit}
+        disabled={connecting || sending}
+      >
+        <Faucet size={52} />
+        {sending ? (
+          <SubmitText>Sending...</SubmitText>
+        ) : (
+          <SubmitText>Submit</SubmitText>
+        )}
       </SubmitButton>
+      {/* {faucetResponse && <pre>{JSON.stringify(faucetResponse, null, 2)}</pre>} */}
     </InputContainer>
   ) : (
-    <h1>Please Connect Metamask</h1>
+    <ConnectMetaMaskText>Connect Meta Mask</ConnectMetaMaskText>
   )
 }

@@ -7,15 +7,17 @@ import {
   InstallMetaMask,
 } from './components'
 
-import { isWeb3Available } from './lib'
+import { isWeb3Available, useEthers } from './lib'
 
 function App() {
+  const ethersState = useEthers()
+
   return isWeb3Available ? (
     <Layout>
-      <ConnectButton />
+      <ConnectButton {...ethersState} />
       <Title />
-      <FaucetForm />
-      <Error />
+      <FaucetForm {...ethersState} />
+      <Error {...ethersState} />
     </Layout>
   ) : (
     <InstallMetaMask />
