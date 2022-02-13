@@ -60,17 +60,15 @@ export const FaucetForm = ({
   const [tx, setTX] = useState({})
   const handleSubmit = async () => {
     try {
-      console.log('handle submit', contract)
-      // TODO: check if sent / display message
       setSending(true)
-      const faucetTx = await contract.faucet(addresses[0])
-      await faucetTx.wait()
-      console.log({ faucetTx })
-      setTX(faucetTx)
+      const tx = await contract.faucet(addresses[0])
+      await tx.wait()
+      console.log({ tx })
+      setTX(tx)
       setSending(false)
       setSent(true)
     } catch (e) {
-      console.error('error', e.message)
+      console.error(e.message)
       setError(e.message)
     }
   }
