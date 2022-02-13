@@ -36,7 +36,7 @@ export const useEthers = () => {
         const contractBalance = await faucetContract.getBalance()
         const signer = await provider.getSigner()
         const MinTokens = await faucetContract.getERC20TokenMinimum()
-
+        const ERC20MinTokens = await ethers.utils.formatEther(MinTokens)
         setState({
           ...state,
           connecting: false,
@@ -46,7 +46,7 @@ export const useEthers = () => {
           contractBalance,
           contract: faucetContract,
           connected: true,
-          ERC20MinTokens: ethers.utils.formatEther(MinTokens)
+          ERC20MinTokens
         })
       }
     } catch (e) {
