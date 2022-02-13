@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A MATIC Faucet for FWEB3 Holders",
   "main": "index.js",
+  "homepage": "https://fweb3-matic-faucet.netlify.app",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
