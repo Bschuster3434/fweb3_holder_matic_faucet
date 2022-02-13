@@ -33,7 +33,6 @@ const ConnectMetaMaskText = styled.h1`
 export const FaucetForm = ({
   addresses,
   contract,
-  signer,
   connecting,
   setError,
   sending,
@@ -43,11 +42,10 @@ export const FaucetForm = ({
     try {
       console.log('handle submit', contract)
       // TODO: check if sent / display message
-      const contractWithSigner = contract.connect(signer);
       setSending(true)
-      const faucetResponse = await contractWithSigner.faucet(addresses[0])
-      // const faucetResponse = await contract.getBalance()
-      console.log({ faucetResponse })
+      const faucetTx = await contract.faucet(addresses[0]);
+      await faucetTx.wait();
+      console.log({ faucetTx })
       setSending(false)
     } catch (e) {
       console.error('error', e.message)
