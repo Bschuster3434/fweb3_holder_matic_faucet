@@ -2,7 +2,6 @@ import { GiUnplugged } from 'react-icons/gi'
 import { GiPlug } from 'react-icons/gi'
 import styled from 'styled-components'
 import { COLORS } from '../constants'
-import { useEthers } from '../lib/useEthers'
 
 const MetaMaskContainer = styled.div`
   display: flex;
@@ -26,27 +25,21 @@ const ConnectIndicator = styled.span`
   padding: 0 1rem 0 0;
 `
 
-const renderConnected = (connected) => {
-  const color = connected ? 'green' : 'red'
+const renderConnected = (address) => {
+  const color = address ? 'green' : 'red'
   return (
     <ConnectIndicator color={color}>
-      {connected ? <Plug /> : <UnPlugged />}
+      {address ? <Plug /> : <UnPlugged />}
     </ConnectIndicator>
   )
 }
 
-export const ConnectButton = () => {
-  const { activate, connecting, address } = useEthers()
-
-  const _handleConnect = async () => {
-    await activate()
-  }
-
+export const ConnectButton = ({ activate, connecting, addresses }) => {
   return (
     <MetaMaskContainer>
-      <ConnectMetaMaskButton onClick={_handleConnect}>
-        {renderConnected(address)}
-        {connecting ? 'connecting...' : address ? 'connected' : 'Connect metamask'}
+      <ConnectMetaMaskButton onClick={() => activate()}>
+        {renderConnected(addresses[0])}
+        {connecting ? 'connecting...' : addresses[0] ? 'connected' : 'Connect metamask'}
       </ConnectMetaMaskButton>
     </MetaMaskContainer>
   )

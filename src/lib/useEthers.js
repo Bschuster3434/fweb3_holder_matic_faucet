@@ -1,24 +1,17 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
+
 import contract from '../contracts/SchusterEtherFaucet.json'
+import { isWeb3Available } from './web3.utils'
 
-import { isWeb3Available } from './eth.utils'
-
-const {
-  REACT_APP_TEST_NETWORK_BASE_URL,
-  REACT_APP_ALCHEMY_POLYGON_API_KEY,
-  REACT_APP_METAMASK_TEST_ACCOUNT_3_PRIK,
-  REACT_APP_FAUCET_CONTRACT_ADDRESS,
-} = process.env
-
-// const network = `${REACT_APP_TEST_NETWORK_BASE_URL}/${REACT_APP_ALCHEMY_POLYGON_API_KEY}`
+const { REACT_APP_FAUCET_CONTRACT_ADDRESS } = process.env
 
 export const useEthers = () => {
   const [state, setState] = useState({
     connecting: false,
-    address: null,
+    addresses: [],
     error: '',
-    contract: null
+    contract: null,
   })
 
   const activate = async () => {
@@ -27,24 +20,25 @@ export const useEthers = () => {
         setState({ ...state, connecting: true, error: '' })
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         await provider.send('eth_requestAccounts', [])
+        const addresses = await provider.listAccounts()
 
         const faucetContract = new ethers.Contract(
           REACT_APP_FAUCET_CONTRACT_ADDRESS,
           contract.abi,
           provider
         )
-        const res = await faucetContract.getBalance()
-        console.log({ res })
-        const signer = provider.getSigner()
-        const address = await signer.getAddress()
+        const contractBalance = await faucetContract.getBalance()
+        const signer = await provider.getSigner()
 
         setState({
           ...state,
           connecting: false,
           provider,
           signer,
-          address,
-          // contract: faucetContract,
+          addresses,
+          contractBalance,
+          faucetContract,
+          connected: true,
         })
       }
     } catch (e) {
@@ -52,5 +46,9 @@ export const useEthers = () => {
       setState({ ...state, error: e.message })
     }
   }
-  return { ...state, activate }
+  const setError = (error) => {
+    setState({ ...state, error })
+  }
+
+  return { ...state, activate, setError }
 }

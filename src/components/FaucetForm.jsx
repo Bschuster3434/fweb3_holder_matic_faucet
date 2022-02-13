@@ -1,59 +1,63 @@
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FaFaucet } from 'react-icons/fa'
-import { useState } from 'react'
-import { useEthers } from '../lib'
 import styled from 'styled-components'
+
 import { COLORS } from '../constants'
 
 const InputContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 200%;
+  justify-content: center;
 `
-
 
 const SubmitButton = styled.button`
-  height: 48px;
   border: none;
   padding: 1rem;
-  background: ${COLORS.background};
+  background-color: ${COLORS.background};
+`
+
+const SubmitText = styled.h1`
+  font-size: 2rem;
   color: ${COLORS.primary};
 `
 
-const Faucet = styled(FaFaucet)`
+const Faucet = styled(({ size }) => (
+  <FaFaucet size={size} color={COLORS.primary} />
+))`
   padding: 1rem;
-  background: white;
-  color: ${COLORS.primary};
-  background: ${COLORS.background};
 `
-const Loading = styled(AiOutlineLoading3Quarters)``
 
-
-export const FaucetForm = () => {
-  const [loading, setLoading] = useState(false)
-  const { contract } = useEthers()
-
+const ConnectMetaMaskText = styled.h1`
+  align-self: center;
+  color: ${COLORS.primary};
+`
+export const FaucetForm = ({
+  addresses,
+  faucetContract,
+  connecting,
+  setError,
+}) => {
   const _handleSubmit = async () => {
     try {
-      setLoading(true)
-      // const contractInstance = etherState.contract(etherState.signer)
-      const getTimeout = await contract.getTimeout()
-      console.log({ getTimeout })
-      setLoading(false)
+      // TODO: check if sent / display message
+      const faucetResponse = await faucetContract.faucet(addresses[0])
+      console.log({ faucetResponse })
     } catch (e) {
-      setLoading(false)
       console.error('error', e.message)
+      setError(e.message)
     }
   }
-
-  return true ? (
+  return addresses[0] ? (
     <InputContainer>
-      <Faucet />
-      <SubmitButton onClick={_handleSubmit}>
-        {loading ? <Loading /> : 'Submit'}
+      <SubmitButton
+        onClick={_handleSubmit}
+        disabled={connecting || addresses[0]}
+      >
+        <Faucet size={52} />
+        <SubmitText>Submit</SubmitText>
       </SubmitButton>
+      {/* {faucetResponse && <pre>{JSON.stringify(faucetResponse, null, 2)}</pre>} */}
     </InputContainer>
   ) : (
-    <h1>Please Connect Metamask</h1>
+    <ConnectMetaMaskText>Connect Meta Mask</ConnectMetaMaskText>
   )
 }

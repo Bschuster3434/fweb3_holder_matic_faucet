@@ -1,3 +1,2 @@
-export { isWeb3Available } from './eth.utils'
-export * from './faucetContract'
-export * from './useEthers'
+export { isWeb3Available } from './web3.utils'
+export { useEthers } from './useEthers'
