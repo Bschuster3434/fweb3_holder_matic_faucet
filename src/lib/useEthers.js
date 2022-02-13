@@ -38,7 +38,7 @@ export const useEthers = () => {
           signer,
           addresses,
           contractBalance,
-          faucetContract,
+          contract: faucetContract,
           connected: true,
         })
       }
