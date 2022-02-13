@@ -1,12 +1,36 @@
-export const DataDetails = ({
+import styled from 'styled-components'
+import { COLORS } from '../constants'
+
+const DataContainer = styled.div`
+  align-self: center;
+`
+
+const FaucetContractAddressText = styled.p`
+  color: ${COLORS.secondary},
+  font-size: 1rem;
+`
+export const DataDetails = (ethersState) => {
+  const {
     addresses,
-    ERC20MinTokens
-}) => {
-    return addresses[0] ? (
-      <div>
-          <h3>Address of Faucet Account: {addresses[0]}</h3>
-          <h3>ERC20 Min Tokens Required: {ERC20MinTokens}</h3>
-      </div>
-    ) : ( <div></div> )
+    contractAddress,
+    network,
+    ERC20MinTokens,
+    connected,
+    contractBalance,
+  } = ethersState
+  const detailsToShow = {
+    account: addresses[0],
+    network: network?.name,
+    ERC20MinTokens,
+    connected,
+    contractBalance,
   }
-  
+  return (
+    <DataContainer>
+      <FaucetContractAddressText>
+        Faucet Contract: {contractAddress}
+      </FaucetContractAddressText>
+      <pre>{JSON.stringify(detailsToShow, null, 2)}</pre>
+    </DataContainer>
+  )
+}

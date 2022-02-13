@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { FaFaucet } from 'react-icons/fa'
 import styled from 'styled-components'
 
@@ -30,6 +31,23 @@ const ConnectMetaMaskText = styled.h1`
   align-self: center;
   color: ${COLORS.primary};
 `
+
+const renderSubmitButton = ({ handleSubmit, connecting, sending }) => (
+  <SubmitButton onClick={handleSubmit} disabled={connecting || sending}>
+    <Faucet size={52} />
+    {sending ? (
+      <>
+        <SubmitText>Sending...</SubmitText>
+        <SubmitText>
+          This can take a few min. Please leave the window open
+        </SubmitText>
+      </>
+    ) : (
+      <SubmitText>Submit</SubmitText>
+    )}
+  </SubmitButton>
+)
+
 export const FaucetForm = ({
   addresses,
   contract,
@@ -38,15 +56,19 @@ export const FaucetForm = ({
   sending,
   setSending,
 }) => {
-  const _handleSubmit = async () => {
+  const [sent, setSent] = useState(false)
+  const [tx, setTX] = useState({})
+  const handleSubmit = async () => {
     try {
       console.log('handle submit', contract)
       // TODO: check if sent / display message
       setSending(true)
-      const faucetTx = await contract.faucet(addresses[0]);
-      await faucetTx.wait();
+      const faucetTx = await contract.faucet(addresses[0])
+      await faucetTx.wait()
       console.log({ faucetTx })
+      setTX(faucetTx)
       setSending(false)
+      setSent(true)
     } catch (e) {
       console.error('error', e.message)
       setError(e.message)
@@ -54,18 +76,14 @@ export const FaucetForm = ({
   }
   return addresses[0] ? (
     <InputContainer>
-      <SubmitButton
-        onClick={_handleSubmit}
-        disabled={connecting || sending}
-      >
-        <Faucet size={52} />
-        {sending ? (
-          <SubmitText>Sending...</SubmitText>
-        ) : (
-          <SubmitText>Submit</SubmitText>
-        )}
-      </SubmitButton>
-      {/* {faucetResponse && <pre>{JSON.stringify(faucetResponse, null, 2)}</pre>} */}
+      {sent ? (
+        <>
+          <h3>Sent!</h3>
+          <pre>{JSON.stringify(tx, null, 2)}</pre>
+        </>
+      ) : (
+        renderSubmitButton({ handleSubmit, connecting, sending })
+      )}
     </InputContainer>
   ) : (
     <ConnectMetaMaskText>Connect Meta Mask</ConnectMetaMaskText>

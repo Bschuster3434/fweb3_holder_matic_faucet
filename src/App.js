@@ -16,7 +16,7 @@ function App() {
   return isWeb3Available ? (
     <Layout>
       <ConnectButton {...ethersState} />
-      <Title />
+      <Title networkName={ethersState?.network?.name}/>
       <FaucetForm {...ethersState} />
       <Error {...ethersState} />
       <DataDetails {...ethersState} />

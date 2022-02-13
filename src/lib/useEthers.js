@@ -12,11 +12,14 @@ const {
 export const useEthers = () => {
   const [state, setState] = useState({
     connecting: false,
+    connected: false,
     addresses: [],
     error: '',
     contract: null,
     sending: false,
     ERC20MinTokens: null,
+    network: null,
+    contractAddress: REACT_APP_FAUCET_CONTRACT_ADDRESS
   })
 
   const activate = async () => {
@@ -27,7 +30,7 @@ export const useEthers = () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         await provider.send('eth_requestAccounts', [])
         const addresses = await provider.listAccounts()
-
+        const network = await provider.getNetwork()
         //Creates a Wallet from the Runner's Private Key and connects to the contract
         const wallet = new ethers.Wallet(
           REACT_APP_FAUCET_ACCOUNT_PRIVATE_KEY,
@@ -43,6 +46,7 @@ export const useEthers = () => {
         const signer = await provider.getSigner()
         const MinTokens = await faucetContract.getERC20TokenMinimum()
         const ERC20MinTokens = await ethers.utils.formatEther(MinTokens)
+
         setState({
           ...state,
           connecting: false,
@@ -53,6 +57,7 @@ export const useEthers = () => {
           contract: faucetContract,
           connected: true,
           ERC20MinTokens,
+          network,
         })
       }
     } catch (e) {
