@@ -1,4 +1,4 @@
-import { useWeb3React } from '@web3-react/core'
+import { useEthers } from '../lib'
 
 import styled from 'styled-components'
 
@@ -12,7 +12,7 @@ const ErrorMessage = styled.h1`
 `
 
 export const Error = () => {
-  const { error } = useWeb3React()
+  const { error } = useEthers()
   return error ? (
     <ErrorContainer>
       <ErrorMessage>{error}</ErrorMessage>
