@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FaFaucet } from 'react-icons/fa'
 import styled from 'styled-components'
 
-import { COLORS } from '../constants'
+import { COLORS, ERROR_NOT_ENOUGH_TOKENS } from '../constants'
 
 const InputContainer = styled.div`
   display: flex;
@@ -55,6 +55,7 @@ export const FaucetForm = ({
   setError,
   sending,
   setSending,
+  ERC20MinTokens,
 }) => {
   const [sent, setSent] = useState(false)
   const [tx, setTX] = useState({})
@@ -67,9 +68,13 @@ export const FaucetForm = ({
       setTX(tx)
       setSending(false)
       setSent(true)
-    } catch (e) {
-      console.error(e.message)
-      setError(e.message)
+    } catch ({ error }) {
+      const message = error?.data?.message
+      if (message !== ERROR_NOT_ENOUGH_TOKENS) {
+        setError(message)
+      } else {
+        setError(`${error.data.message}! minimum ${ERC20MinTokens}`)
+      }
     }
   }
   return addresses[0] ? (
