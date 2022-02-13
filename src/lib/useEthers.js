@@ -12,6 +12,7 @@ export const useEthers = () => {
     addresses: [],
     error: '',
     contract: null,
+    sending: false
   })
 
   const activate = async () => {
@@ -43,12 +44,14 @@ export const useEthers = () => {
       }
     } catch (e) {
       console.error(e)
-      setState({ ...state, error: e.message })
+      setState({ ...state, error: e.message, sending: false })
     }
   }
   const setError = (error) => {
-    setState({ ...state, error })
+    setState({ ...state, error, sending: false  })
   }
-
-  return { ...state, activate, setError }
+  const setSending = (sending) => {
+    setState({ ...state, sending })
+  }
+  return { ...state, activate, setError, setSending }
 }

@@ -32,15 +32,20 @@ const ConnectMetaMaskText = styled.h1`
 `
 export const FaucetForm = ({
   addresses,
-  faucetContract,
+  contract,
   connecting,
   setError,
+  sending,
+  setSending,
 }) => {
   const _handleSubmit = async () => {
     try {
+      console.log('handle submit', contract)
       // TODO: check if sent / display message
-      const faucetResponse = await faucetContract.faucet(addresses[0])
+      setSending(true)
+      const faucetResponse = await contract.faucet(addresses[0])
       console.log({ faucetResponse })
+      setSending(false)
     } catch (e) {
       console.error('error', e.message)
       setError(e.message)
@@ -50,10 +55,14 @@ export const FaucetForm = ({
     <InputContainer>
       <SubmitButton
         onClick={_handleSubmit}
-        disabled={connecting || addresses[0]}
+        disabled={connecting || sending}
       >
         <Faucet size={52} />
-        <SubmitText>Submit</SubmitText>
+        {sending ? (
+          <SubmitText>Sending...</SubmitText>
+        ) : (
+          <SubmitText>Submit</SubmitText>
+        )}
       </SubmitButton>
       {/* {faucetResponse && <pre>{JSON.stringify(faucetResponse, null, 2)}</pre>} */}
     </InputContainer>
