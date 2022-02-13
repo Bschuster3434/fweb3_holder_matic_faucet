@@ -5,8 +5,9 @@ const ErrorContainer = styled.div`
   justify-content: center;
   align-items: center;
 `
-const ErrorMessage = styled.h1`
+const ErrorMessage = styled.p`
   color: red;
+  align-self: center;
 `
 
 export const Error = ({ error }) => (
