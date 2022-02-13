@@ -44,6 +44,7 @@ export const FaucetForm = ({
       // TODO: check if sent / display message
       setSending(true)
       const faucetResponse = await contract.faucet(addresses[0])
+      // const faucetResponse = await contract.getBalance()
       console.log({ faucetResponse })
       setSending(false)
     } catch (e) {

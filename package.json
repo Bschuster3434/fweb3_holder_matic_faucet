@@ -10,6 +10,7 @@
     "eject": "react-scripts eject",
     "hard": "npx hardhat",
     "hard:node": "yarn hard node",
+    "hard:node:local": "yarn hard node --network hardhat",
     "hard:compile": "yarn hard compile",
     "hard:accounts": "yarn hard accounts",
     "hard:test": "yarn hard test"
