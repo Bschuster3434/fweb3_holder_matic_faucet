@@ -40,7 +40,7 @@ export const useEthers = () => {
       }
       const wallet = await getFaucetWallet(provider)
       const faucetContract = await getFaucetContract(wallet)
-      // const contractBalance = await faucetContract.getBalance()
+      const contractBalance = await faucetContract.getBalance()
       const minTokens = await faucetContract.getERC20TokenMinimum()
       const ERC20MinTokens = await ethers.utils.formatEther(minTokens)
 
@@ -50,11 +50,12 @@ export const useEthers = () => {
         provider,
         signer,
         addresses,
-        // contractBalance,
+        contractBalance,
         contract: faucetContract,
         connected: true,
         ERC20MinTokens,
         network,
+        faucetContract
       }
       setState(data)
     } catch (e) {

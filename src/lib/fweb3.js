@@ -29,9 +29,9 @@ export const getFaucetContract = (wallet) => {
   }
 }
 
-export const submitFaucetRequest = async (address) => {
+export const submitFaucetRequest = async (faucetContract, address) => {
   try {
-    const tx = await contract.faucet(address)
+    const tx = await faucetContract.faucet(address)
     return tx
   } catch (e) {
     return handleError(e)

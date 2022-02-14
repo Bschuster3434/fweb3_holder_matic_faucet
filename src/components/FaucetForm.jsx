@@ -57,6 +57,7 @@ export const FaucetForm = ({
   sending,
   setSending,
   ERC20MinTokens,
+  faucetContract
 }) => {
   const [sent, setSent] = useState(false)
   const [tx, setTX] = useState({})
@@ -68,7 +69,7 @@ export const FaucetForm = ({
   const handleSubmit = async () => {
     try {
       setSending(true)
-      const tx = await submitFaucetRequest(addresses[0])
+      const tx = await submitFaucetRequest(faucetContract, addresses[0])
       await tx.wait()
       successfulFaucet(tx)
     } catch (e) {
