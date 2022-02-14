@@ -22,7 +22,7 @@ const DisabledText = styled.div`
 
 function App() {
   const ethersState = useEthers()
-  if (DISABLED) {
+  if (DISABLED === 'true') {
     return <DisabledText><h1>Disabled</h1></DisabledText>
   }
   return isWeb3Available ? (
