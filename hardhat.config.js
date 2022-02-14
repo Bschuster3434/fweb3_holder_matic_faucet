@@ -37,6 +37,15 @@ module.exports = {
     },
     localhost: {
       url: "http://localhost:8545"
-    }
+    },
+    polygon_mainnet: {
+      url: `${REACT_APP_PROD_NETWORK_BASE_URL}/${REACT_APP_ALCHEMY_POLYGON_API_KEY}`,
+      accounts: [
+        REACT_APP_METAMASK_DEPLOYER_ACCOUNT_PRIK
+      ],
+    },
+    localhost: {
+      url: "http://localhost:8545"
+    },    
   },
 }
