@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { FaFaucet } from 'react-icons/fa'
 import styled from 'styled-components'
 
-import { COLORS, ERROR_NOT_ENOUGH_TOKENS } from '../constants'
+import { FWEB3_ACCOUNTS } from '../lib'
+import { COLORS, ERROR_NOT_ENOUGH_TOKENS, ERROR_NOT_IN_AIRDROP_LIST } from '../constants'
 
 const InputContainer = styled.div`
   display: flex;
@@ -62,9 +63,14 @@ export const FaucetForm = ({
   const handleSubmit = async () => {
     try {
       setSending(true)
+      setError('')
+      if (!FWEB3_ACCOUNTS.includes(addresses[0])) {
+        setSending(false)
+        setError(ERROR_NOT_IN_AIRDROP_LIST)
+        return
+      }
       const tx = await contract.faucet(addresses[0])
       await tx.wait()
-      console.log({ tx })
       setTX(tx)
       setSending(false)
       setSent(true)
