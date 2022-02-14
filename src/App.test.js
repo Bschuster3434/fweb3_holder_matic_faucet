@@ -3,5 +3,5 @@ import App from './App';
 
 test('renders learn react link', () => {
   render(<App />);
-  expect(screen.getByText('fWeb3 MATIC Faucet')).toBeTruthy()
+  expect(screen.getByTestId('app')).toBeTruthy()
 });

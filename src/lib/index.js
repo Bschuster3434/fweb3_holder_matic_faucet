@@ -1,2 +1,3 @@
-export { isWeb3Available } from './web3.utils'
+export { isWeb3Available } from './ethers.utils'
+export { submitFaucetRequest} from './fweb3'
 export { useEthers } from './useEthers'
