@@ -37,6 +37,9 @@ What should the contract be able to do?
 - node v16
 - React 17
 
+Set ENV vars
+`REACT_APP_FAUCET_ACCOUNT_PRIVATE_KEY`, `REACT_APP_FAUCET_CONTRACT_ADDRESS`
+
 ```bash
 # use node v16
 nvm use
@@ -49,11 +52,12 @@ yarn build
 ```
 ## Front End Notes / Tooling:
 
-use yarn for preformance optimizations over npm
+Use yarn for preformance optimizations over npm
 - [yarn](https://yarnpkg.com/)
 
-use nvm for managing node version
+Use nvm for managing node version
 - [nvm](https://github.com/nvm-sh/nvm)
+
 
 ---
 ## Future To Do Items
