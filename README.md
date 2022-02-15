@@ -38,7 +38,8 @@ What should the contract be able to do?
 - React 17
 
 Set ENV vars
-`REACT_APP_FAUCET_ACCOUNT_PRIVATE_KEY`, `REACT_APP_FAUCET_CONTRACT_ADDRESS`
+- `REACT_APP_FAUCET_ACCOUNT_PRIVATE_KEY` - get this from MetaMask
+- `REACT_APP_FAUCET_CONTRACT_ADDRESS` - The address on Polygon Network is `0x67806adca0fD8825DA9cddc69b9bA8837A64874b`
 
 ```bash
 # use node v16
