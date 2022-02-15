@@ -3,6 +3,8 @@ import { FaFaucet } from 'react-icons/fa'
 import styled from 'styled-components'
 
 import { COLORS, ERROR_NOT_ENOUGH_TOKENS } from '../constants'
+import { submitFaucetRequest } from '../lib'
+import { handleError } from '../lib/ethers.utils'
 
 const InputContainer = styled.div`
   display: flex;
@@ -50,30 +52,38 @@ const renderSubmitButton = ({ handleSubmit, connecting, sending }) => (
 
 export const FaucetForm = ({
   addresses,
-  contract,
   connecting,
   setError,
   sending,
   setSending,
   ERC20MinTokens,
+  faucetContract
 }) => {
   const [sent, setSent] = useState(false)
   const [tx, setTX] = useState({})
+  const successfulFaucet = (tx) => {
+    setTX(tx)
+    setSending(false)
+    setSent(true)
+  }
   const handleSubmit = async () => {
     try {
       setSending(true)
-      const tx = await contract.faucet(addresses[0])
-      await tx.wait()
+      const tx = await submitFaucetRequest(faucetContract, addresses[0])
       console.log({ tx })
-      setTX(tx)
-      setSending(false)
-      setSent(true)
-    } catch ({ error }) {
-      const message = error?.data?.message
+      if (tx.status === 'error') {
+        setSending(false)
+        setError(tx.e.error.data.message || 'unknown error')
+        return
+      }
+      await tx.wait()
+      successfulFaucet(tx)
+    } catch (e) {
+      const { message } = handleError(e)
       if (message !== ERROR_NOT_ENOUGH_TOKENS) {
         setError(message)
       } else {
-        setError(`${error.data.message}! minimum ${ERC20MinTokens}`)
+        setError(`${message}! minimum ${ERC20MinTokens}`)
       }
     }
   }

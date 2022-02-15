@@ -13,8 +13,11 @@
     "hard:node": "yarn hard node",
     "hard:node:local": "yarn hard node --network hardhat",
     "hard:compile": "yarn hard compile",
+    "hard:deploy": "yarn hard deploy",
     "hard:accounts": "yarn hard accounts",
-    "hard:test": "yarn hard test"
+    "hard:test": "yarn hard test",
+    "hard:deploy:mumbai": "node ./scripts/polygon_mumbai_deploy.js",
+    "hard:deploy:mainnet": "node ./scripts/polygon_mainnet_deploy.js"
   },
   "repository": {
     "type": "git",
