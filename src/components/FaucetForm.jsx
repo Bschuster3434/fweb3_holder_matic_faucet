@@ -73,7 +73,7 @@ export const FaucetForm = ({
       console.log({ tx })
       if (tx.status === 'error') {
         setSending(false)
-        setError(tx.e.data.error.message || 'unknown error')
+        setError(tx.e.error.data.message || 'unknown error')
         return
       }
       await tx.wait()
