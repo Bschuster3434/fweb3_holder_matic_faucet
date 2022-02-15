@@ -71,9 +71,9 @@ export const FaucetForm = ({
       setSending(true)
       const tx = await submitFaucetRequest(faucetContract, addresses[0])
       console.log({ tx })
-      if (tx.data.message) {
+      if (tx.status === 'error') {
         setSending(false)
-        setError(tx.data.message)
+        setError(tx.message)
         return
       }
       await tx.wait()

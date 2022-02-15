@@ -29,7 +29,6 @@ export const useEthers = () => {
         message,
       } = await activateMetaMask()
       if (status !== STATUS.ok) {
-        console.error(message)
         setState({
           ...state,
           connecting: false,
