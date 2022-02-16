@@ -49,6 +49,7 @@ const baseError = {
 }
 
 export const handleError = (e = '') => {
+  console.log(JSON.stringify(e, null, 2))
   if (e === '') {
     return baseError
   } else if (typeof e === 'string') {
