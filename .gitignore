@@ -4,6 +4,7 @@ cache
 .vscode
 scripts/flow/*/.flowconfig
 .flowconfig
+deploy_data
 *~
 *.pyc
 .grunt

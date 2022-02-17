@@ -44,6 +44,10 @@ export const FaucetForm = ({
       console.log('handle submit', contract)
       // TODO: check if sent / display message
       const contractWithSigner = contract.connect(signer);
+      // GAS FIX
+      const estimatedGas = await contractWithSigner.estimateGas()
+      // add 2.5% on top of estimate
+      // debugger
       setSending(true)
       const faucetResponse = await contractWithSigner.faucet(addresses[0])
       // const faucetResponse = await contract.getBalance()
