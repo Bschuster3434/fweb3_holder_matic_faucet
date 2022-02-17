@@ -78,7 +78,8 @@ yarn deploy:faucet
 # Fill in the faucet contract address in .env
 
 # Grab a private key from the node server running in another terminal from step one.
-# Fill in the 
+# TODO: Figure out how to programatically send the created token to the test account.
+# Gonna have to connect MM to local.
 
 ```
 
