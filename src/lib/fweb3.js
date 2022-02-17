@@ -31,7 +31,7 @@ export const getFaucetContract = (wallet) => {
 
 export const submitFaucetRequest = async (faucetContract, address) => {
   try {
-    const tx = await faucetContract.faucet(address)
+    const tx = await faucetContract.faucet(address, {gasPrice: (30000000000) * 2.0})
     return tx
   } catch (e) {
     return handleError(e)
