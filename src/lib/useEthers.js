@@ -28,6 +28,7 @@ export const useEthers = () => {
         status,
         message,
       } = await activateMetaMask()
+
       if (status !== STATUS.ok) {
         setState({
           ...state,
@@ -37,6 +38,7 @@ export const useEthers = () => {
         })
         return
       }
+
       const wallet = await getFaucetWallet(provider)
       const faucetContract = await getFaucetContract(wallet)
       const contractBalance = await faucetContract.getBalance()

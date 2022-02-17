@@ -69,16 +69,9 @@ export const FaucetForm = ({
   }
   const handleSubmit = async () => {
     try {
-      console.log('handle submit', contract)
-      // TODO: check if sent / display message
-      const contractWithSigner = contract.connect(signer);
-      // GAS FIX
-      const estimatedGas = await contractWithSigner.estimateGas()
-      // add 2.5% on top of estimate
-      // debugger
       setSending(true)
       const tx = await submitFaucetRequest(contract, addresses[0])
-      console.log({ tx })
+
       if (tx.status === 'error') {
         setSending(false)
         setError(tx.e.error.data.message || 'unknown error')

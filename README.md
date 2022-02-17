@@ -61,6 +61,27 @@ Use nvm for managing node version
 
 
 ---
+
+# Local Development
+```bash
+# start local network node (leave running, note the accounts)
+yarn hard:node
+# deploy the test token (need this address for faucet deploy)
+yarn deploy:token
+# Update / create .env file at the root using .env.example as a guide. fill in
+# you will only have the token address at this point. fill that in the .env
+# will create a `tmp/token_deploy_info` file with all the info
+cp .env.example .env
+# deploy the faucet (make sure your token address is filled in the env!)
+yarn deploy:faucet
+# This will create a `tmp/faucet_deploy_info` file with all the info about the faucet deploy.
+# Fill in the faucet contract address in .env
+
+# Grab a private key from the node server running in another terminal from step one.
+# Fill in the 
+
+```
+
 ## Future To Do Items
 - Get a Github Actions Pipeline Setup
 - Support Environment Variables to Switch Out Contracts in Dev, Test and Prod
