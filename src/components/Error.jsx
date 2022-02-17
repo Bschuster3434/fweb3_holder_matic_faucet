@@ -1,5 +1,3 @@
-import { useWeb3React } from '@web3-react/core'
-
 import styled from 'styled-components'
 
 const ErrorContainer = styled.div`
@@ -7,15 +5,13 @@ const ErrorContainer = styled.div`
   justify-content: center;
   align-items: center;
 `
-const ErrorMessage = styled.h1`
+const ErrorMessage = styled.p`
   color: red;
+  align-self: center;
 `
 
-export const Error = () => {
-  const { error } = useWeb3React()
-  return error ? (
-    <ErrorContainer>
-      <ErrorMessage>{error}</ErrorMessage>
-    </ErrorContainer>
-  ) : null
-}
+export const Error = ({ error }) => (
+  <ErrorContainer>
+    <ErrorMessage>{error}</ErrorMessage>
+  </ErrorContainer>
+)

@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { FaFaucet } from 'react-icons/fa'
 import styled from 'styled-components'
 
-import { COLORS } from '../constants'
+import { COLORS, ERROR_NOT_ENOUGH_TOKENS } from '../constants'
+import { submitFaucetRequest } from '../lib'
+import { handleError } from '../lib/ethers.utils'
 
 const InputContainer = styled.div`
   display: flex;
@@ -30,16 +33,41 @@ const ConnectMetaMaskText = styled.h1`
   align-self: center;
   color: ${COLORS.primary};
 `
+
+const renderSubmitButton = ({ handleSubmit, connecting, sending }) => (
+  <SubmitButton onClick={handleSubmit} disabled={connecting || sending}>
+    <Faucet size={52} />
+    {sending ? (
+      <>
+        <SubmitText>Sending...</SubmitText>
+        <SubmitText>
+          This can take a few min. Please leave the window open
+        </SubmitText>
+      </>
+    ) : (
+      <SubmitText>Submit</SubmitText>
+    )}
+  </SubmitButton>
+)
+
 export const FaucetForm = ({
   addresses,
-  contract,
-  signer,
   connecting,
   setError,
   sending,
   setSending,
+  ERC20MinTokens,
+  contract,
+  signer
 }) => {
-  const _handleSubmit = async () => {
+  const [sent, setSent] = useState(false)
+  const [tx, setTX] = useState({})
+  const successfulFaucet = (tx) => {
+    setTX(tx)
+    setSending(false)
+    setSent(true)
+  }
+  const handleSubmit = async () => {
     try {
       console.log('handle submit', contract)
       // TODO: check if sent / display message
@@ -49,29 +77,34 @@ export const FaucetForm = ({
       // add 2.5% on top of estimate
       // debugger
       setSending(true)
-      const faucetResponse = await contractWithSigner.faucet(addresses[0])
-      // const faucetResponse = await contract.getBalance()
-      console.log({ faucetResponse })
-      setSending(false)
+      const tx = await submitFaucetRequest(contract, addresses[0])
+      console.log({ tx })
+      if (tx.status === 'error') {
+        setSending(false)
+        setError(tx.e.error.data.message || 'unknown error')
+        return
+      }
+      await tx.wait()
+      successfulFaucet(tx)
     } catch (e) {
-      console.error('error', e.message)
-      setError(e.message)
+      const { message } = handleError(e)
+      if (message !== ERROR_NOT_ENOUGH_TOKENS) {
+        setError(message)
+      } else {
+        setError(`${message}! minimum ${ERC20MinTokens}`)
+      }
     }
   }
   return addresses[0] ? (
     <InputContainer>
-      <SubmitButton
-        onClick={_handleSubmit}
-        disabled={connecting || sending}
-      >
-        <Faucet size={52} />
-        {sending ? (
-          <SubmitText>Sending...</SubmitText>
-        ) : (
-          <SubmitText>Submit</SubmitText>
-        )}
-      </SubmitButton>
-      {/* {faucetResponse && <pre>{JSON.stringify(faucetResponse, null, 2)}</pre>} */}
+      {sent ? (
+        <>
+          <h3>Sent!</h3>
+          <pre>{JSON.stringify(tx, null, 2)}</pre>
+        </>
+      ) : (
+        renderSubmitButton({ handleSubmit, connecting, sending })
+      )}
     </InputContainer>
   ) : (
     <ConnectMetaMaskText>Connect Meta Mask</ConnectMetaMaskText>

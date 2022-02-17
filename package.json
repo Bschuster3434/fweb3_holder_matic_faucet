@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A MATIC Faucet for FWEB3 Holders",
   "main": "index.js",
+  "homepage": "https://fweb3-matic-faucet.netlify.app",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -14,8 +15,11 @@
     "hard": "npx hardhat",
     "hard:node": "yarn hard node",
     "hard:compile": "yarn hard compile",
+    "hard:deploy": "yarn hard deploy",
     "hard:accounts": "yarn hard accounts",
-    "hard:test": "yarn hard test"
+    "hard:test": "yarn hard test",
+    "hard:deploy:mumbai": "node ./scripts/polygon_mumbai_deploy.js",
+    "hard:deploy:mainnet": "node ./scripts/polygon_mainnet_deploy.js"
   },
   "repository": {
     "type": "git",
