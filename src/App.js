@@ -11,7 +11,8 @@ import { isWeb3Available, useEthers } from './lib'
 
 function App() {
   const ethersState = useEthers()
-
+  const { rawError } = ethersState
+  console.log({ rawError })
   return (
     <div data-testid='app'>
       {isWeb3Available() ? (
