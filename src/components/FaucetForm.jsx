@@ -74,7 +74,6 @@ export const FaucetForm = ({
   setError,
   sending,
   setSending,
-  ERC20MinTokens,
   faucetContract,
 }) => {
   const [sent, setSent] = useState(false)
@@ -90,6 +89,7 @@ export const FaucetForm = ({
     console.log({ tx })
     if (tx.status === 'error') {
       setError(tx.e?.message ?? 'tx error')
+      setSending(false)
       return
     }
     await tx.wait()
