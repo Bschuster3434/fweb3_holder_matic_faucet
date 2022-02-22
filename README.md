@@ -4,6 +4,21 @@ A MATIC faucet for [the FWEB3 Community](https://fweb3.xyz/)
 This is a Smart Contract deployed onto the Polygon Network (Contract Address TBD).
 Users will be able to request tokens from this contract in order to be able to send transactions on the Polygon Network.
 
+## Deployment
+
+```bash
+# Set REACT_APP_ETH_NETWORK=<localhost|testnet|mainnet>
+# Set related .env vars for network
+yarn deploy:token
+# Requires token contract address in .env
+yarn deploy:faucet
+# Send required tokens
+yarn send:tokens <address> <amount-in-native-token>
+# Fill faucet
+yarn fill:faucet <amount-in-native-token>
+```
+
+## Local Development: see LOCALDEV.md
 ## Usage
 
 FWEB3 holders will be able to call the 'faucet' function with their address in order to receive a pre-determined amount of MATIC.
@@ -13,15 +28,11 @@ After they call the 'faucet' function, they will not be able to use the faucet a
 After the time has elapsed, they can call 'faucet' again to receive a pre-determined amount of MATIC.
 
 Must hold a pre-determined amount of FWEB3 to be able to use the faucet function.
-
-
 ## Possible Variables
 
 - Increment of MATIC to Send: .1 MATIC
 - Timeout for the Faucet: 24 Hours (or equivalent blocks)
 - Amount of FWEB3 to use the Faucet: 300 FWEB3
-
-
 ## Token Development
 
 What should the contract be able to do?
@@ -31,34 +42,6 @@ What should the contract be able to do?
 - After that, they will then be sent a pre-determined amount of MATIC and a new timestamp will be added to hash to notify when they are allowed to receive again
 - If the faucet is empty, it returns an error
 - If the users has received tokens recently, it returns an error
-
----
-## Front End React
-- node v16
-- React 17
-
-Set ENV vars
-- `REACT_APP_FAUCET_ACCOUNT_PRIVATE_KEY` - get this from MetaMask
-- `REACT_APP_FAUCET_CONTRACT_ADDRESS` - The address on Polygon Network is `0x67806adca0fD8825DA9cddc69b9bA8837A64874b`
-
-```bash
-# use node v16
-nvm use
-# install deps
-yarn install
-# run dev server
-yarn start
-# build prod
-yarn build
-```
-## Front End Notes / Tooling:
-
-Use yarn for preformance optimizations over npm
-- [yarn](https://yarnpkg.com/)
-
-Use nvm for managing node version
-- [nvm](https://github.com/nvm-sh/nvm)
-
 
 ---
 ## Future To Do Items

@@ -7,17 +7,20 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "yarn test:hh && yarn test:fe",
     "eject": "react-scripts eject",
-    "hard": "npx hardhat",
-    "hard:node": "yarn hard node",
-    "hard:node:local": "yarn hard node --network hardhat",
-    "hard:compile": "yarn hard compile",
-    "hard:deploy": "yarn hard deploy",
-    "hard:accounts": "yarn hard accounts",
-    "hard:test": "yarn hard test",
-    "hard:deploy:mumbai": "node ./scripts/polygon_mumbai_deploy.js",
-    "hard:deploy:mainnet": "node ./scripts/polygon_mainnet_deploy.js"
+    "test:hh": "yarn hh test",
+    "test:fe": "CI=true react-scripts test --env=jsdom ./src",
+    "test:fe:watch": "react-scripts test --env=jsdom ./src",
+    "hh": "npx hardhat",
+    "hh:compile": "yarn hh compile",
+    "hh:node": "yarn hh node",
+    "hh:deploy": "yarn hh run ./scripts/deploy.js --network",
+    "hh:deploy:faucet": "yarn hh run ./scripts/deploy_faucet.js --network",
+    "hh:deploy:token": "yarn hh run ./scripts/deploy_token.js --network",
+    "send:tokens": "node ./scripts/send_required_tokens.js",
+    "fill:faucet": "node ./scripts/fill_faucet.js",
+    "faucet:balance": "node ./scripts/faucet_balance.js"
   },
   "repository": {
     "type": "git",
@@ -30,7 +33,7 @@
     "url": "https://github.com/Bschuster3434/fweb3_holder_matic_faucet/issues"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.4",
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.2",
     "@openzeppelin/contracts": "^4.4.2",
     "@testing-library/jest-dom": "^5.16.2",
@@ -39,7 +42,7 @@
     "chai": "^4.3.6",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.4",
-    "hardhat": "^2.8.3"
+    "hardhat": "^2.8.4"
   },
   "dependencies": {
     "@ethersproject/units": "^5.5.0",

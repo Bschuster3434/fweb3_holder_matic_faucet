@@ -1,27 +1,45 @@
 import styled, { keyframes } from 'styled-components'
 import { FaFaucet } from 'react-icons/fa'
-import { fadeIn } from 'react-animations'
+import { fadeIn, flash } from 'react-animations'
 import { useState } from 'react'
 
 import { submitFaucetRequest } from '../lib'
 import { COLORS } from '../constants'
+import { SentInfo } from './SentInfo'
 
 const fader = keyframes`${fadeIn}`
+const flasher = keyframes`${flash}`
 
 const InputContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `
 
 const SubmitButton = styled.button`
   border: none;
+  border-radius: 1rem;
   padding: 1rem;
   background-color: ${COLORS.background};
+  min-width: 20%;
+  margin-top: 3rem;
+  &:hover {
+    border: 1px green solid;
+  }
+`
+
+const SendingText = styled.h1`
+  font-size: 1rem;
+  color: ${COLORS.primary};
+  animation: 1s ${flasher} alternate infinite;
+`
+const InfoText = styled.p`
+  color: #dbdb;
+  font-size: 1rem;
 `
 
 const SubmitText = styled.h1`
-  font-size: 2rem;
   color: ${COLORS.primary};
 `
 
@@ -33,20 +51,20 @@ const Faucet = styled(({ size }) => (
 
 const ConnectMetaMaskText = styled.h1`
   align-self: center;
-  color: red;
+  color: yellow;
   font-size: 1.4rem;
   animation: 1s ${fader} alternate infinite;
 `
 
 const renderSubmitButton = ({ handleSubmit, connecting, sending }) => (
   <SubmitButton onClick={handleSubmit} disabled={connecting || sending}>
-    <Faucet size={52} />
+    <Faucet size={80} />
     {sending ? (
       <>
-        <SubmitText>Sending...</SubmitText>
-        <SubmitText>
+        <SendingText>Sending...</SendingText>
+        <InfoText>
           This can take a few min. Please leave the window open
-        </SubmitText>
+        </InfoText>
       </>
     ) : (
       <SubmitText>Submit</SubmitText>
@@ -58,9 +76,9 @@ export const FaucetForm = ({
   addresses,
   connecting,
   setError,
+  setRawError,
   sending,
   setSending,
-  ERC20MinTokens,
   faucetContract,
 }) => {
   const [sent, setSent] = useState(false)
@@ -71,23 +89,25 @@ export const FaucetForm = ({
     setSent(true)
   }
   const handleSubmit = async () => {
-    setSending(true)
-    const tx = await submitFaucetRequest(faucetContract, addresses[0])
-    console.log({ tx })
-    if (tx.status === 'error') {
-      setError(tx.e?.message ?? 'tx error')
-      return
+    try {
+      setSending(true)
+      const tx = await submitFaucetRequest(faucetContract, addresses[0])
+      console.log({ tx })
+      await tx.wait()
+      successfulFaucet(tx)
+    } catch (e) {
+      const errorMessage =
+        JSON.parse(JSON.stringify(e))?.error?.data?.message || 'unknown error'
+      setError(errorMessage)
+      setRawError(JSON.stringify(e, null, 2))
+      setSending(false)
     }
-    await tx.wait()
-    successfulFaucet(tx)
   }
+
   return addresses[0] ? (
     <InputContainer>
       {sent ? (
-        <>
-          <h3>Sent!</h3>
-          <pre>{JSON.stringify(tx, null, 2)}</pre>
-        </>
+        <SentInfo tx={tx} />
       ) : (
         renderSubmitButton({ handleSubmit, connecting, sending })
       )}
