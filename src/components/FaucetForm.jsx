@@ -85,6 +85,7 @@ export const FaucetForm = ({
   }
   const handleSubmit = async () => {
     setSending(true)
+    setError('')
     const tx = await submitFaucetRequest(faucetContract, addresses[0])
     console.log({ tx })
     if (tx.status === 'error') {
