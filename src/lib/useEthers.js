@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
 
-import { activateMetaMask, handleError } from './ethers.utils'
+import { activateMetaMask } from './ethers.utils'
 import { getFaucetWallet, getFaucetContract } from './fweb3'
 import { STATUS } from '../constants'
 
@@ -18,16 +18,14 @@ export const useEthers = () => {
     ERC20MinTokens: null,
     network: null,
     contractAddress: REACT_APP_FAUCET_CONTRACT_ADDRESS,
+    rawError: '',
   })
 
   const activate = async () => {
     try {
       setState({ ...state, connecting: true, error: '' })
-      const {
-        data: { provider, addresses, network, signer },
-        status,
-        message,
-      } = await activateMetaMask()
+      const { provider, addresses, network, signer, status, message } =
+        await activateMetaMask()
       if (status !== STATUS.ok) {
         setState({
           ...state,
@@ -54,12 +52,17 @@ export const useEthers = () => {
         connected: true,
         ERC20MinTokens,
         network,
-        faucetContract
+        faucetContract,
       }
       setState(data)
     } catch (e) {
-      const { message } = handleError(e)
-      setState({ ...state, sending: false, error: message, connecting: false })
+      setState({
+        ...state,
+        sending: false,
+        error: e?.data?.message ?? 'unknown error',
+        connecting: false,
+        rawError: e
+      })
     }
   }
   const setError = (error) => {

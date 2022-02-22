@@ -5,7 +5,6 @@ import {
   FaucetForm,
   Title,
   InstallMetaMask,
-  DataDetails,
 } from './components'
 
 import { isWeb3Available, useEthers } from './lib'
@@ -18,10 +17,9 @@ function App() {
       {isWeb3Available() ? (
         <Layout>
           <ConnectButton {...ethersState} />
-          <Title networkName={ethersState?.network?.name} />
           <FaucetForm {...ethersState} />
+          <Title {...ethersState} />
           <Error {...ethersState} />
-          <DataDetails {...ethersState} />
         </Layout>
       ) : (
         <InstallMetaMask />

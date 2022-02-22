@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import styled, { keyframes } from 'styled-components'
 import { FaFaucet } from 'react-icons/fa'
-import styled from 'styled-components'
+import { fadeIn } from 'react-animations'
+import { useState } from 'react'
 
-import { COLORS, ERROR_NOT_ENOUGH_TOKENS } from '../constants'
 import { submitFaucetRequest } from '../lib'
-import { handleError } from '../lib/ethers.utils'
+import { COLORS } from '../constants'
+
+const fader = keyframes`${fadeIn}`
 
 const InputContainer = styled.div`
   display: flex;
@@ -31,7 +33,9 @@ const Faucet = styled(({ size }) => (
 
 const ConnectMetaMaskText = styled.h1`
   align-self: center;
-  color: ${COLORS.primary};
+  color: red;
+  font-size: 1.4rem;
+  animation: 1s ${fader} alternate infinite;
 `
 
 const renderSubmitButton = ({ handleSubmit, connecting, sending }) => (
@@ -57,7 +61,7 @@ export const FaucetForm = ({
   sending,
   setSending,
   ERC20MinTokens,
-  faucetContract
+  faucetContract,
 }) => {
   const [sent, setSent] = useState(false)
   const [tx, setTX] = useState({})
@@ -67,25 +71,15 @@ export const FaucetForm = ({
     setSent(true)
   }
   const handleSubmit = async () => {
-    try {
-      setSending(true)
-      const tx = await submitFaucetRequest(faucetContract, addresses[0])
-      console.log({ tx })
-      if (tx.status === 'error') {
-        setSending(false)
-        setError(tx.e.error.data.message || 'unknown error')
-        return
-      }
-      await tx.wait()
-      successfulFaucet(tx)
-    } catch (e) {
-      const { message } = handleError(e)
-      if (message !== ERROR_NOT_ENOUGH_TOKENS) {
-        setError(message)
-      } else {
-        setError(`${message}! minimum ${ERC20MinTokens}`)
-      }
+    setSending(true)
+    const tx = await submitFaucetRequest(faucetContract, addresses[0])
+    console.log({ tx })
+    if (tx.status === 'error') {
+      setError(tx.e?.message ?? 'tx error')
+      return
     }
+    await tx.wait()
+    successfulFaucet(tx)
   }
   return addresses[0] ? (
     <InputContainer>
@@ -99,6 +93,6 @@ export const FaucetForm = ({
       )}
     </InputContainer>
   ) : (
-    <ConnectMetaMaskText>Connect Meta Mask</ConnectMetaMaskText>
+    <ConnectMetaMaskText>Please connect Meta Mask</ConnectMetaMaskText>
   )
 }

@@ -1,7 +1,10 @@
 import { GiUnplugged } from 'react-icons/gi'
 import { GiPlug } from 'react-icons/gi'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { COLORS } from '../constants'
+import { bounceIn } from 'react-animations';
+
+const bounce = keyframes`${bounceIn}`;
 
 const MetaMaskContainer = styled.div`
   display: flex;
@@ -16,6 +19,7 @@ const ConnectMetaMaskButton = styled.button`
   padding: 1rem;
   color: ${COLORS.primary};
   background: ${COLORS.background};
+  animation: 1s ${bounce}; 
 `
 const Plug = styled(() => <GiPlug size={32} />)``
 const UnPlugged = styled(() => <GiUnplugged size={32} />)``
