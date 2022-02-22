@@ -95,9 +95,10 @@ export const FaucetForm = ({
     await tx.wait()
     successfulFaucet(tx)
   }
-  return addresses[0] ? (
+  return true ? (
+  // return addresses[0] ? (
     <InputContainer>
-      {sent ? (
+      {true ? (
         <SentInfo tx={tx}/>
       ) : (
         renderSubmitButton({ handleSubmit, connecting, sending })

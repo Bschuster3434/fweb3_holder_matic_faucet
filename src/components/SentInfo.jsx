@@ -30,9 +30,10 @@ const TopWrapper = styled.div`
 `
 const BottomWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  animation: 1.5s ${speedIn};
+  align-items: flex-start;
+  animation: 0.8s ${speedIn};
 `
 
 const PaperAirplaneContainer = styled.div`
@@ -58,7 +59,7 @@ const SentText = styled.p`
   font-size: 2rem;
 `
 
-const TxInfo = styled.p`
+const TxInfo = styled.div`
   display: flex;
   font-size: 1rem;
   margin: 0;
@@ -73,8 +74,10 @@ const TxLabel = styled.p`
 `
 
 export const SentInfo = ({ tx }) => {
-  // FIXME: remove
-  const txId = tx?.to || 'dunno what the tx is here'
+  const txTo = tx?.to || 'dunno what the tx is here'
+  const txFrom = tx?.from || 'dunno tx from'
+  const txR = tx?.r || 'dunno tx r'
+  const txS = tx?.s || 'dunno tx s'
   return (
     <Container>
       <TopWrapper>
@@ -85,9 +88,24 @@ export const SentInfo = ({ tx }) => {
       </TopWrapper>
       <BottomWrapper>
         <TxInfo>
-          <TxLabel>TX:</TxLabel>
-          {txId}
-          <SmallCopyButton copyValue={txId} />
+          <TxLabel>To:</TxLabel>
+          {txTo}
+          <SmallCopyButton copyValue={txTo} />
+        </TxInfo>
+        <TxInfo>
+          <TxLabel>From:</TxLabel>
+          {txFrom}
+          <SmallCopyButton copyValue={txFrom} />
+        </TxInfo>
+        <TxInfo>
+          <TxLabel>TXS:</TxLabel>
+          {txS}
+          <SmallCopyButton copyValue={txS} />
+        </TxInfo>
+        <TxInfo>
+          <TxLabel>TXR:</TxLabel>
+          {txR}
+          <SmallCopyButton copyValue={txR} />
         </TxInfo>
       </BottomWrapper>
     </Container>
