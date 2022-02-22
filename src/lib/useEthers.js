@@ -59,7 +59,7 @@ export const useEthers = () => {
       setState({
         ...state,
         sending: false,
-        error: e?.data?.message ?? 'unknown error',
+        error: e?.data?.message ?? 'an unknown error occured',
         connecting: false,
         rawError: e
       })

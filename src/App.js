@@ -17,8 +17,8 @@ function App() {
       {isWeb3Available() ? (
         <Layout>
           <ConnectButton {...ethersState} />
-          <FaucetForm {...ethersState} />
           <Title {...ethersState} />
+          <FaucetForm {...ethersState} />
           <Error {...ethersState} />
         </Layout>
       ) : (
