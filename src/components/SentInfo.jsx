@@ -74,7 +74,7 @@ const TxLabel = styled.p`
 
 export const SentInfo = ({ tx }) => {
   // FIXME: remove
-  const txId = '0xb15A3D29eFe51baaC8d3cd2f4F747B843FeAdA7d'
+  const txId = tx?.to || 'dunno what the tx is here'
   return (
     <Container>
       <TopWrapper>
