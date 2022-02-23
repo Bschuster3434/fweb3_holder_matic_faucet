@@ -7,7 +7,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "yarn test:hh && yarn test:jest",
+    "test:hh": "yarn hh test",
+    "test:fe": "CI=true react-scripts test --env=jsdom ./src",
+    "test:fe:watch": "react-scripts test --env=jsdom ./src",
     "eject": "react-scripts eject",
     "hh": "npx hardhat",
     "hh:node": "yarn hh node",
