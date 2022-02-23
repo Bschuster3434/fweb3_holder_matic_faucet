@@ -10,10 +10,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "hh": "npx hardhat",
-    "deploy": "yarn hh run ./scripts/deploy.js --network ",
-    "deploy:token": "yarn hh run ./scripts/deploy_token.js",
-    "init:local": "yarn hh run ./scripts/init_local.js",
-    "hh:node": "yarn hh node"
+    "hh:node": "yarn hh node",
+    "deploy:local": "yarn hh run ./scripts/deploy.js --network localhost",
+    "init:local": "yarn hh run ./scripts/init_local.js"
   },
   "repository": {
     "type": "git",
