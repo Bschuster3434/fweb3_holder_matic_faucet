@@ -31,20 +31,20 @@ module.exports = {
   solidity: '0.8.0',
   networks: {
     hardhat: {
-      // polygon_mumbai: {
-      //   url: `${REACT_APP_TEST_NETWORK_BASE_URL}/${REACT_APP_ALCHEMY_POLYGON_TESTNET_API_KEY}`,
-      //   accounts: [
-      //     REACT_APP_METAMASK_TEST_ACCOUNT_3_PRIK,
-      //     REACT_APP_METAMASK_TEST_ACCOUNT_4_PRIK,
-      //     REACT_APP_METAMASK_TEST_ACCOUNT_5_PRIK,
-      //   ],
-      // },
-      // polygon_mainnet: {
-      //   url: `${REACT_APP_PROD_NETWORK_BASE_URL}/${REACT_APP_ALCHEMY_POLYGON_MAINNET_API_KEY}`,
-      //   accounts: [
-      //     REACT_APP_METAMASK_DEPLOYER_ACCOUNT_PRIK
-      //   ],
-      // }  
+      polygon_mumbai: {
+        url: `${REACT_APP_TEST_NETWORK_BASE_URL}/${REACT_APP_ALCHEMY_POLYGON_TESTNET_API_KEY}`,
+        accounts: [
+          REACT_APP_METAMASK_TEST_ACCOUNT_3_PRIK,
+          REACT_APP_METAMASK_TEST_ACCOUNT_4_PRIK,
+          REACT_APP_METAMASK_TEST_ACCOUNT_5_PRIK,
+        ],
+      },
+      polygon_mainnet: {
+        url: `${REACT_APP_PROD_NETWORK_BASE_URL}/${REACT_APP_ALCHEMY_POLYGON_MAINNET_API_KEY}`,
+        accounts: [
+          REACT_APP_METAMASK_DEPLOYER_ACCOUNT_PRIK
+        ],
+      }  
     }
   },
 }
