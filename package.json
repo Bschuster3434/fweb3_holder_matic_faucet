@@ -9,15 +9,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "hard": "npx hardhat",
-    "hard:node": "yarn hard node",
-    "hard:node:local": "yarn hard node --network hardhat",
-    "hard:compile": "yarn hard compile",
-    "hard:deploy": "yarn hard deploy",
-    "hard:accounts": "yarn hard accounts",
-    "hard:test": "yarn hard test",
-    "hard:deploy:mumbai": "node ./scripts/polygon_mumbai_deploy.js",
-    "hard:deploy:mainnet": "node ./scripts/polygon_mainnet_deploy.js"
+    "hh": "npx hardhat",
+    "deploy": "yarn hh run ./scripts/deploy.js --network ",
+    "deploy:token": "yarn hh run ./scripts/deploy_token.js",
+    "init:local": "yarn hh run ./scripts/init_local.js",
+    "hh:node": "yarn hh node"
   },
   "repository": {
     "type": "git",

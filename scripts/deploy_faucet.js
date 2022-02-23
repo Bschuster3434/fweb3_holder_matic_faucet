@@ -1,6 +1,6 @@
 const hre = require('hardhat')
 
-const FAUCET_CONTRACT_NAME = 'SchusterEtherFaucet'
+const { FAUCET_CONTRACT_NAME } = process.env
 
 const DEFAULT_FAUCET_CONFIG = {
   dripBase: 10,

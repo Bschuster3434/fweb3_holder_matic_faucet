@@ -1,6 +1,6 @@
 const hre = require('hardhat')
 
-const TOKEN_CONTRACT_NAME = 'SchusterTestToken'
+const { TOKEN_CONTRACT_NAME } = process.env
 
 const deployToken = async () => {
   const TokenContractFactory = await hre.ethers.getContractFactory(
@@ -17,5 +17,4 @@ const deployToken = async () => {
 
 module.exports = {
   deployToken,
-  TOKEN_CONTRACT_NAME
 }
