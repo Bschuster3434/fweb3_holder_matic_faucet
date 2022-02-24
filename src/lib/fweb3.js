@@ -48,7 +48,7 @@ export const getFaucetContract = (wallet) => {
 
 export const submitFaucetRequest = async (faucetContract, address) => {
   return faucetContract.faucet(address, {
-    gasPrice: 30000000000 * REACT_APP_GAS_MULTIPLIER,
+    gasPrice: 30000000000 * parseInt(REACT_APP_GAS_MULTIPLIER),
   })
 }
 
