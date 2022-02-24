@@ -4,7 +4,8 @@ import {
   FaucetForm,
   Title,
   InstallMetaMask,
-  Error
+  Error,
+  Footer
 } from './components'
 
 import { isWeb3Available, useEthers } from './lib'
@@ -23,6 +24,7 @@ function App() {
       ) : (
         <InstallMetaMask />
       )}
+      <Footer />
     </div>
   )
 }
