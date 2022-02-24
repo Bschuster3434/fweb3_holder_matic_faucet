@@ -79,7 +79,7 @@ export const Error = ({ error, rawError, network, connected }) => {
   return (
     <ErrorContainer>
       {!correctNework && <ErrorMessage>Incorrect Network: {network}</ErrorMessage>}
-      <ErrorMessage>{error}</ErrorMessage>
+      <ErrorMessage>{error.replace('execution reverted', '')}</ErrorMessage>
       {shouldShowDebug(error) && (
         <DebugErrorContainer>
           <ErrorInfoText>
