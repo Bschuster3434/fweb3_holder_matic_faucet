@@ -3,25 +3,27 @@ import { ethers } from 'ethers'
 
 import { activateMetaMask } from './ethers.utils'
 import { getFaucetWallet, getFaucetContract, getContractAddress } from './fweb3'
-import { STATUS } from '../constants'
 
 export const useEthers = () => {
-  const [state, setState] = useState({
-    connecting: false,
-    connected: false,
-    addresses: [],
-    error: '',
-    contract: null,
-    sending: false,
-    ERC20MinTokens: null,
-    network: null,
-    contractAddress: getContractAddress(),
-    rawError: ''
-  })
+  const [sending, setSending] = useState(false)
+  const [connecting, setConnecting] = useState(false)
+  const [connected, setConnected] = useState(false)
+  const [faucetContract, setFaucetContract] = useState(null)
+  const [addresses, setAddresses] = useState([])
+  const [minRequiredTokens, setMinRequiredTokens] = useState(null)
+  const [network, setNetwork] = useState(null)
+  const [provider, setProvider] = useState(null)
+  const [signer, setSigner] = useState(null)
+  const [contractBalance, setContractBalance] = useState(null)
+  const [error, setError] = useState('')
+  const [rawError, setRawError] = useState('')
+
+  const contractAddress = getContractAddress()
 
   const activate = async () => {
     try {
-      setState({ ...state, connecting: true, error: '' })
+      setError('')
+      setConnecting(true)
       const { provider, addresses, network, signer } =
       await activateMetaMask()
 
@@ -29,42 +31,42 @@ export const useEthers = () => {
       const faucetContract = await getFaucetContract(wallet)
       const contractBalance = await faucetContract.getBalance()
       const minTokens = await faucetContract.getERC20TokenMinimum()
-      const ERC20MinTokens = await ethers.utils.formatEther(minTokens)
+      const minRequiredTokens = await ethers.utils.formatEther(minTokens)
 
-      const data = {
-        ...state,
-        connecting: false,
-        provider,
-        signer,
-        addresses,
-        contractBalance,
-        contract: faucetContract,
-        connected: true,
-        ERC20MinTokens,
-        network,
-        faucetContract,
-      }
-      setState(data)
+      setConnecting(false)
+      setConnected(true)
+      setProvider(provider)
+      setSigner(signer)
+      setAddresses(addresses)
+      setContractBalance(contractBalance)
+      setFaucetContract(faucetContract)
+      setMinRequiredTokens(minRequiredTokens)
+      setNetwork(network)
     } catch (e) {
-      // useEthers
-      debugger
-      setState({
-        ...state,
-        sending: false,
-        error: JSON.parse(JSON.stringify(e)).error.data.message ?? 'an unknown error occured',
-        connecting: false,
-        rawError: JSON.parse(JSON.stringify(e)).error.data.message,
-      })
+      setSending(false)
+      setConnecting(false)
+      setError(JSON.parse(JSON.stringify(e)).error.data.message ?? 'an unknown error occured')
+      setRawError(e)
     }
   }
-  const setRawError = (e) => {
-    setState({ ...state, rawError: e, sending: false })
+
+  return {
+    sending,
+    setSending,
+    connecting,
+    connected,
+    faucetContract,
+    addresses,
+    minRequiredTokens,
+    network,
+    provider,
+    signer,
+    contractBalance,
+    contractAddress,
+    error,
+    setError,
+    rawError,
+    setRawError,
+    activate
   }
-  const setError = (error) => {
-    setState({ ...state, error, sending: false, connecting: false })
-  }
-  const setSending = (sending) => {
-    setState({ ...state, sending })
-  }
-  return { ...state, activate, setError, setSending, setRawError }
 }

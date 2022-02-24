@@ -42,7 +42,7 @@ const renderConnected = (address) => {
 export const ConnectButton = ({ activate, connecting, addresses }) => {
   return (
     <MetaMaskContainer>
-      <ConnectMetaMaskButton onClick={() => activate()}>
+      <ConnectMetaMaskButton onClick={activate}>
         {renderConnected(addresses[0])}
         {connecting
           ? 'connecting...'

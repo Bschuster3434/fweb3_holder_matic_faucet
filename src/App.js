@@ -1,10 +1,10 @@
 import {
-  Error,
   Layout,
   ConnectButton,
   FaucetForm,
   Title,
   InstallMetaMask,
+  Error
 } from './components'
 
 import { isWeb3Available, useEthers } from './lib'
@@ -18,7 +18,7 @@ function App() {
           <ConnectButton {...ethersState} />
           <Title {...ethersState} />
           <FaucetForm {...ethersState} />
-          {ethersState.error && <Error {...ethersState} />}
+          <Error {...ethersState } />
         </Layout>
       ) : (
         <InstallMetaMask />

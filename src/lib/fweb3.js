@@ -1,5 +1,4 @@
 import { ethers } from 'ethers'
-import { STATUS } from '../constants'
 
 import contract from '../contracts/SchusterEtherFaucet.json'
 

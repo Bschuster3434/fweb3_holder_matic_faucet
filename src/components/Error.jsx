@@ -11,11 +11,12 @@ const ErrorContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin: 1rem;
 `
 const ErrorMessage = styled.p`
   color: red;
   align-self: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin: 0;
   margin-bottom: 1rem;
   padding: 0;
@@ -75,17 +76,16 @@ export const Error = ({ error, rawError }) => {
       setCopied(false)
     }, 1000)
   }
-  debugger
   return (
     <ErrorContainer>
-      <ErrorMessage>{ethersState.error}</ErrorMessage>
-      {shouldShowDebug(ethersState.error) && (
+      <ErrorMessage>{error}</ErrorMessage>
+      {shouldShowDebug(error) && (
         <DebugErrorContainer>
           <ErrorInfoText>
             Copy & Paste the error below in #support if the error above does not
             make sense to you
           </ErrorInfoText>
-          <CodeBlock>{JSON.stringify(ethersState.error, null, 2)}</CodeBlock>
+          <CodeBlock>{JSON.stringify(error, null, 2)}</CodeBlock>
           <CopyButton onClick={handleCopy}>
             <VscCopy size={30} />
             <span>{copied ? 'copied!' : 'copy'}</span>

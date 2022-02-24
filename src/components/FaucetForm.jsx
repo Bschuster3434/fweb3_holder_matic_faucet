@@ -12,6 +12,7 @@ const flasher = keyframes`${flash}`
 
 const InputContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `
@@ -23,6 +24,9 @@ const SubmitButton = styled.button`
   background-color: ${COLORS.background};
   min-width: 20%;
   margin-top: 3rem;
+  &:hover {
+    border: 1px green solid;
+  }
 `
 
 const SendingText = styled.h1`
@@ -91,17 +95,19 @@ export const FaucetForm = ({
       console.log({ tx })
       await tx.wait()
       successfulFaucet(tx)
-    } catch(e) {
-      const errorMessage = JSON.parse(JSON.stringify(e))?.error?.data?.message || 'unknown error'
+    } catch (e) {
+      const errorMessage =
+        JSON.parse(JSON.stringify(e))?.error?.data?.message || 'unknown error'
       setError(errorMessage)
       setRawError(e)
       setSending(false)
     }
   }
+
   return addresses[0] ? (
     <InputContainer>
       {sent ? (
-        <SentInfo tx={tx}/>
+        <SentInfo tx={tx} />
       ) : (
         renderSubmitButton({ handleSubmit, connecting, sending })
       )}
