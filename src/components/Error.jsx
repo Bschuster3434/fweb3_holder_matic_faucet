@@ -26,7 +26,6 @@ const DebugErrorContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: #dbdbdb;
-  max-width: 500px;
   padding: 1.5rem;
   margin-bottom: 3rem;
   border-radius: 1rem;
@@ -70,7 +69,7 @@ export const Error = ({ error, rawError }) => {
   const ethersState = useEthers()
 
   const handleCopy = () => {
-    copy(JSON.stringify(ethersState.error))
+    copy(JSON.stringify(ethersState.rawError))
     setCopied(true)
     setTimeout(() => {
       setCopied(false)
@@ -85,7 +84,7 @@ export const Error = ({ error, rawError }) => {
             Copy & Paste the error below in #support if the error above does not
             make sense to you
           </ErrorInfoText>
-          <CodeBlock>{JSON.stringify(error, null, 2)}</CodeBlock>
+          <CodeBlock>{rawError}</CodeBlock>
           <CopyButton onClick={handleCopy}>
             <VscCopy size={30} />
             <span>{copied ? 'copied!' : 'copy'}</span>

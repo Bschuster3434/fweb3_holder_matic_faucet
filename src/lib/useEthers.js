@@ -46,7 +46,7 @@ export const useEthers = () => {
       setSending(false)
       setConnecting(false)
       setError(JSON.parse(JSON.stringify(e)).error?.data?.message ?? 'an unknown error occured')
-      setRawError(e)
+      setRawError(JSON.stringify(e, null, 2))
       console.error(e)
     }
   }

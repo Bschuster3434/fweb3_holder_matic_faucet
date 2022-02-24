@@ -99,7 +99,7 @@ export const FaucetForm = ({
       const errorMessage =
         JSON.parse(JSON.stringify(e))?.error?.data?.message || 'unknown error'
       setError(errorMessage)
-      setRawError(e)
+      setRawError(JSON.stringify(e, null, 2))
       setSending(false)
     }
   }

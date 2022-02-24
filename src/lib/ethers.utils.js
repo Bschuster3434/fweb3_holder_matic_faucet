@@ -1,5 +1,4 @@
 import { ethers } from 'ethers'
-import { STATUS } from '../constants'
 
 export const isWeb3Available = () =>
   typeof window !== 'undefined' && window?.ethereum
@@ -15,7 +14,6 @@ export const activateMetaMask = async () => {
   const signer = await provider.getSigner()
 
   return {
-    status: STATUS.ok,
     provider,
     addresses,
     network,

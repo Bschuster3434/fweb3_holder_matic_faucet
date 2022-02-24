@@ -10,7 +10,7 @@ const FooterContainer = styled.div`
   color: #6669;
 `
 
-export const Footer = ({ network = 'not connected'}) => {
+export const Footer = () => {
   return (
     <FooterContainer>
       <p>{REACT_APP_ETH_NETWORK} </p>

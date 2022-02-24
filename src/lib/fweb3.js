@@ -3,14 +3,14 @@ import { ethers } from 'ethers'
 import contract from '../contracts/SchusterEtherFaucet.json'
 
 const {
-  REACT_APP_ETH_NETWORK = 'testnet',
+  REACT_APP_ETH_NETWORK = 'localhost',
   REACT_APP_LOCALNET_DEPLOYER_ACCOUNT_PRIK,
   REACT_APP_LOCALNET_FAUCET_CONTRACT_ADDRESS,
   REACT_APP_TESTNET_FAUCET_DEPLOYER_ACCOUNT_PRIK,
   REACT_APP_TESTNET_FAUCET_CONTRACT_ADDRESS,
   REACT_APP_MAINNET_FAUCET_DEPLOYER_ACCOUNT_PRIK,
   REACT_APP_MAINNET_FAUCET_CONTRACT_ADDRESS,
-  REACT_APP_GAS_MULTIPLIER = 2.0
+  REACT_APP_GAS_MULTIPLIER = 2.0,
 } = process.env
 
 const getPrivateKey = () => {
@@ -47,5 +47,7 @@ export const getFaucetContract = (wallet) => {
 }
 
 export const submitFaucetRequest = async (faucetContract, address) => {
-  return faucetContract.faucet(address, { gasPrice: 30000000000 * REACT_APP_GAS_MULTIPLIER })
+  return faucetContract.faucet(address, {
+    gasPrice: 30000000000 * REACT_APP_GAS_MULTIPLIER
+  })
 }
