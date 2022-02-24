@@ -18,7 +18,7 @@ function App() {
           <ConnectButton {...ethersState} />
           <Title {...ethersState} />
           <FaucetForm {...ethersState} />
-          <Error {...ethersState} />
+          {ethersState.error && <Error {...ethersState} />}
         </Layout>
       ) : (
         <InstallMetaMask />

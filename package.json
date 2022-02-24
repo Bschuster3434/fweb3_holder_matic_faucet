@@ -14,7 +14,7 @@
     "eject": "react-scripts eject",
     "hh": "npx hardhat",
     "hh:node": "yarn hh node",
-    "deploy:local": "yarn hh run ./scripts/deploy.js --network localhost",
+    "deploy": "yarn hh run ./scripts/deploy.js --network",
     "init:local": "yarn hh run ./scripts/init_local.js"
   },
   "repository": {

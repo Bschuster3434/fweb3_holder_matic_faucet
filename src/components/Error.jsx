@@ -4,6 +4,7 @@ import copy from 'copy-to-clipboard'
 import { useState } from 'react'
 
 import { COLORS } from '../constants'
+import { useEthers } from '../lib'
 
 const ErrorContainer = styled.div`
   display: flex;
@@ -65,23 +66,26 @@ const shouldShowDebug = (error) => {
 
 export const Error = ({ error, rawError }) => {
   const [copied, setCopied] = useState(false)
+  const ethersState = useEthers()
+
   const handleCopy = () => {
-    copy(JSON.stringify(rawError))
+    copy(JSON.stringify(ethersState.error))
     setCopied(true)
     setTimeout(() => {
       setCopied(false)
     }, 1000)
   }
+  debugger
   return (
     <ErrorContainer>
-      <ErrorMessage>{error}</ErrorMessage>
-      {shouldShowDebug(error) && (
+      <ErrorMessage>{ethersState.error}</ErrorMessage>
+      {shouldShowDebug(ethersState.error) && (
         <DebugErrorContainer>
           <ErrorInfoText>
             Copy & Paste the error below in #support if the error above does not
             make sense to you
           </ErrorInfoText>
-          <CodeBlock>{JSON.stringify(rawError, null, 2)}</CodeBlock>
+          <CodeBlock>{JSON.stringify(ethersState.error, null, 2)}</CodeBlock>
           <CopyButton onClick={handleCopy}>
             <VscCopy size={30} />
             <span>{copied ? 'copied!' : 'copy'}</span>

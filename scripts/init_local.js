@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { ethers } = require('ethers')
 const tokenABI = require('../artifacts/contracts/SchusterianTestToken.sol/SchusterTestToken.json')
-const { REACT_APP_TOKEN_CONTRACT_ADDRESS } = process.env
+const { REACT_APP_MAINNET_TOKEN_CONTRACT_ADDRESS } = process.env
 
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider()
@@ -9,7 +9,7 @@ async function main() {
   const signer = await provider.getSigner()
 
   const tokenContract = new ethers.Contract(
-    REACT_APP_TOKEN_CONTRACT_ADDRESS,
+    REACT_APP_MAINNET_TOKEN_CONTRACT_ADDRESS,
     tokenABI.abi,
     signer
   )

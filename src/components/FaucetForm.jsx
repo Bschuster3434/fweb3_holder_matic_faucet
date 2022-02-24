@@ -72,6 +72,7 @@ export const FaucetForm = ({
   addresses,
   connecting,
   setError,
+  setRawError,
   sending,
   setSending,
   faucetContract,
@@ -84,17 +85,18 @@ export const FaucetForm = ({
     setSent(true)
   }
   const handleSubmit = async () => {
-    setSending(true)
-    setError('')
-    const tx = await submitFaucetRequest(faucetContract, addresses[0])
-    console.log({ tx })
-    if (tx.status === 'error') {
-      setError(tx.e?.message ?? 'tx error')
+    try {
+      setSending(true)
+      const tx = await submitFaucetRequest(faucetContract, addresses[0])
+      console.log({ tx })
+      await tx.wait()
+      successfulFaucet(tx)
+    } catch(e) {
+      const errorMessage = JSON.parse(JSON.stringify(e))?.error?.data?.message || 'unknown error'
+      setError(errorMessage)
+      setRawError(e)
       setSending(false)
-      return
     }
-    await tx.wait()
-    successfulFaucet(tx)
   }
   return addresses[0] ? (
     <InputContainer>

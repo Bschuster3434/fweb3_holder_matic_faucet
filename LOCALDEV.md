@@ -9,11 +9,13 @@ yarn
 ```
 
 ---
+
 ### copy .env.example to .env
 
 ```bash
 cp .env.example .env
 ```
+
 ---
 
 ### Start local node
@@ -26,14 +28,15 @@ This starts the local node. Leave running in its own terminal.
 Fill in `REACT_APP_LOCALNET_DEPLOYER_ACCOUNT_PRIK` with prik from account 0 (this is the default deploy account for localnet)
 
 ---
+
 ### Deploy both token and faucet contracts
 
 ```bash
-yarn deploy:local
+yarn deploy <localhost|polygon_mumbai|polygon_mainnet>
 ```
 
 Take note of the token address and faucet address.
-Fill in `REACT_APP_TOKEN_CONTRACT_ADDRESS` and `REACT_APP_FAUCET_CONTRACT_ADDRESS`
+Fill in `REACT_APP_MAINNET_TOKEN_CONTRACT_ADDRESS` and `REACT_APP_MAINNET_FAUCET_CONTRACT_ADDRESS`
 with the output of deploy
 
 ---
