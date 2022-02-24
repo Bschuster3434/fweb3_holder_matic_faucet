@@ -4,6 +4,20 @@ A MATIC faucet for [the FWEB3 Community](https://fweb3.xyz/)
 This is a Smart Contract deployed onto the Polygon Network (Contract Address TBD).
 Users will be able to request tokens from this contract in order to be able to send transactions on the Polygon Network.
 
+## Deployment
+
+```bash
+# Set REACT_APP_ETH_NETWORK=<localhost|testnet|mainnet>
+# Set related .env vars for network
+yarn deploy:token
+# Requires token contract address in .env
+yarn deploy:faucet
+# Send required tokens
+yarn send:tokens <address> <amount-in-native-token>
+# Fill faucet
+yarn fill:faucet <amount-in-native-token>
+```
+
 ## Local Development: see LOCALDEV.md
 ## Usage
 

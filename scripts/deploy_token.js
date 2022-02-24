@@ -1,20 +1,7 @@
-const hre = require('hardhat')
+const { deployToken } = require('./deployments')
 
-const { TOKEN_CONTRACT_NAME } = process.env
-
-const deployToken = async () => {
-  const TokenContractFactory = await hre.ethers.getContractFactory(
-    TOKEN_CONTRACT_NAME
-  )
-
-  const tokenDeployment = await TokenContractFactory.deploy()
-  await tokenDeployment.deployed()
-
-  console.log('[+] Token contract address:', tokenDeployment.address)
-
-  return tokenDeployment
-}
-
-module.exports = {
-  deployToken,
-}
+deployToken()
+  .then(() => {
+    process.exit(0)
+  })
+  .catch(console.error)
