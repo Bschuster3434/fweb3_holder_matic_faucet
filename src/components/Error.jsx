@@ -4,7 +4,7 @@ import copy from 'copy-to-clipboard'
 import { useState } from 'react'
 
 import { COLORS } from '../constants'
-import { useEthers } from '../lib'
+import { useEthers, validateNetwork } from '../lib'
 
 const ErrorContainer = styled.div`
   display: flex;
@@ -64,7 +64,7 @@ const shouldShowDebug = (error) => {
   )
 }
 
-export const Error = ({ error, rawError }) => {
+export const Error = ({ error, rawError, network, connected }) => {
   const [copied, setCopied] = useState(false)
   const ethersState = useEthers()
 
@@ -75,8 +75,10 @@ export const Error = ({ error, rawError }) => {
       setCopied(false)
     }, 1000)
   }
+  const correctNework = validateNetwork(connected, network)
   return (
     <ErrorContainer>
+      {!correctNework && <ErrorMessage>Incorrect Network: {network}</ErrorMessage>}
       <ErrorMessage>{error}</ErrorMessage>
       {shouldShowDebug(error) && (
         <DebugErrorContainer>

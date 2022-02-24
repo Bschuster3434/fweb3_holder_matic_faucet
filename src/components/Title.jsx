@@ -42,7 +42,7 @@ const CopiedText = styled.span`
   color: aliceblue;
 `
 
-export const Title = ({ networkName, contractAddress }) => {
+export const Title = ({ network, contractAddress }) => {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
     copy(contractAddress)
@@ -60,7 +60,7 @@ export const Title = ({ networkName, contractAddress }) => {
         <SmallCopyButton handleCopy={handleCopy} />
         {copied && <CopiedText>copied!</CopiedText>}
       </ContractTextContainer>
-      {networkName && <NetworkText>Connected to: {networkName}</NetworkText>}
+      {network && <NetworkText>Connected to: {network}</NetworkText>}
     </>
   )
 }

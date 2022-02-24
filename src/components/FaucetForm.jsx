@@ -67,7 +67,7 @@ const renderSubmitButton = ({ handleSubmit, connecting, sending }) => (
         </InfoText>
       </>
     ) : (
-      <SubmitText>Submit</SubmitText>
+      <SubmitText>Get MATIC</SubmitText>
     )}
   </SubmitButton>
 )
