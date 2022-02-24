@@ -1,39 +1,66 @@
 import { ethers } from 'ethers'
-import { handleError } from './ethers.utils'
+
 import contract from '../contracts/SchusterEtherFaucet.json'
 
-const { REACT_APP_FAUCET_ACCOUNT_PRIVATE_KEY, REACT_APP_FAUCET_CONTRACT_ADDRESS } = process.env
+const {
+  REACT_APP_ETH_NETWORK = 'localhost',
+  REACT_APP_LOCALNET_DEPLOYER_ACCOUNT_PRIK,
+  REACT_APP_LOCALNET_FAUCET_CONTRACT_ADDRESS,
+  REACT_APP_TESTNET_FAUCET_DEPLOYER_ACCOUNT_PRIK,
+  REACT_APP_TESTNET_FAUCET_CONTRACT_ADDRESS,
+  REACT_APP_MAINNET_FAUCET_DEPLOYER_ACCOUNT_PRIK,
+  REACT_APP_MAINNET_FAUCET_CONTRACT_ADDRESS,
+  REACT_APP_GAS_MULTIPLIER = 2.0,
+} = process.env
+
+const getPrivateKey = () => {
+  switch (REACT_APP_ETH_NETWORK) {
+    case 'mainnet':
+      return REACT_APP_MAINNET_FAUCET_DEPLOYER_ACCOUNT_PRIK
+    case 'testnet':
+      return REACT_APP_TESTNET_FAUCET_DEPLOYER_ACCOUNT_PRIK
+    default:
+      // Deployer is same for both faucet and token locally
+      return REACT_APP_LOCALNET_DEPLOYER_ACCOUNT_PRIK
+  }
+}
+
+export const getContractAddress = () => {
+  switch (REACT_APP_ETH_NETWORK) {
+    case 'mainnet':
+      return REACT_APP_MAINNET_FAUCET_CONTRACT_ADDRESS
+    case 'testnet':
+      return REACT_APP_TESTNET_FAUCET_CONTRACT_ADDRESS
+    default:
+      return REACT_APP_LOCALNET_FAUCET_CONTRACT_ADDRESS
+  }
+}
 
 export const getFaucetWallet = async (provider) => {
-  try {
-    const wallet =  new ethers.Wallet(
-      REACT_APP_FAUCET_ACCOUNT_PRIVATE_KEY,
-      provider
-    )
-    return wallet
-  } catch (e) {
-    return handleError(e)
-  }
+  const privk = getPrivateKey()
+  return new ethers.Wallet(privk, provider)
 }
 
 export const getFaucetContract = (wallet) => {
-  try {
-    const faucetContract =  new ethers.Contract(
-      REACT_APP_FAUCET_CONTRACT_ADDRESS,
-      contract.abi,
-      wallet
-    )
-    return faucetContract
-  } catch (e) {
-    return handleError(e)
-  }
+  const address = getContractAddress()
+  return new ethers.Contract(address, contract.abi, wallet)
 }
 
 export const submitFaucetRequest = async (faucetContract, address) => {
-  try {
-    const tx = await faucetContract.faucet(address, {gasPrice: (30000000000) * 2.0})
-    return tx
-  } catch (e) {
-    return handleError(e)
+  return faucetContract.faucet(address, {
+    gasPrice: 30000000000 * REACT_APP_GAS_MULTIPLIER,
+  })
+}
+
+export const validateNetwork = (connected, network) => {
+  if (!connected) {
+    return true
+  } else if (REACT_APP_ETH_NETWORK.includes('local')) {
+    return true
+  } else if (REACT_APP_ETH_NETWORK === 'testnet') {
+    return network === 'maticmum'
+  } else if (REACT_APP_ETH_NETWORK === 'mainnet') {
+    return network === 'matic'
   }
+  return false
 }

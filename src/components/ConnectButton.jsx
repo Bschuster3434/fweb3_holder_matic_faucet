@@ -1,7 +1,11 @@
+import styled, { keyframes } from 'styled-components'
 import { GiUnplugged } from 'react-icons/gi'
+import { fadeIn } from 'react-animations'
 import { GiPlug } from 'react-icons/gi'
-import styled from 'styled-components'
+
 import { COLORS } from '../constants'
+
+const fade = keyframes`${fadeIn}`
 
 const MetaMaskContainer = styled.div`
   display: flex;
@@ -16,6 +20,7 @@ const ConnectMetaMaskButton = styled.button`
   padding: 1rem;
   color: ${COLORS.primary};
   background: ${COLORS.background};
+  animation: 3s ${fade};
 `
 const Plug = styled(() => <GiPlug size={32} />)``
 const UnPlugged = styled(() => <GiUnplugged size={32} />)``
@@ -37,9 +42,13 @@ const renderConnected = (address) => {
 export const ConnectButton = ({ activate, connecting, addresses }) => {
   return (
     <MetaMaskContainer>
-      <ConnectMetaMaskButton onClick={() => activate()}>
+      <ConnectMetaMaskButton onClick={activate}>
         {renderConnected(addresses[0])}
-        {connecting ? 'connecting...' : addresses[0] ? 'connected' : 'Connect metamask'}
+        {connecting
+          ? 'connecting...'
+          : addresses[0]
+          ? 'connected'
+          : 'Connect metamask'}
       </ConnectMetaMaskButton>
     </MetaMaskContainer>
   )

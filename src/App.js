@@ -1,31 +1,30 @@
 import {
-  Error,
   Layout,
   ConnectButton,
   FaucetForm,
   Title,
   InstallMetaMask,
-  DataDetails,
+  Error,
+  Footer
 } from './components'
 
 import { isWeb3Available, useEthers } from './lib'
 
 function App() {
   const ethersState = useEthers()
-
   return (
     <div data-testid='app'>
       {isWeb3Available() ? (
         <Layout>
           <ConnectButton {...ethersState} />
-          <Title networkName={ethersState?.network?.name} />
+          <Title {...ethersState} />
           <FaucetForm {...ethersState} />
-          <Error {...ethersState} />
-          <DataDetails {...ethersState} />
+          <Error {...ethersState } />
         </Layout>
       ) : (
         <InstallMetaMask />
       )}
+      <Footer />
     </div>
   )
 }
