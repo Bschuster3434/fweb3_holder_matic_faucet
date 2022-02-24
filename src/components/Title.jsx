@@ -60,7 +60,7 @@ export const Title = ({ network, contractAddress }) => {
         <SmallCopyButton handleCopy={handleCopy} />
         {copied && <CopiedText>copied!</CopiedText>}
       </ContractTextContainer>
-      {network && <NetworkText>Connected to: {network}</NetworkText>}
+      {network?.name && <NetworkText>Connected to: {network.name}</NetworkText>}
     </>
   )
 }

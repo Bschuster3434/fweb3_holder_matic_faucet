@@ -58,9 +58,9 @@ export const validateNetwork = (connected, network) => {
   } else if (REACT_APP_ETH_NETWORK.includes('local')) {
     return true
   } else if (REACT_APP_ETH_NETWORK === 'testnet') {
-    return network === 'maticmum'
+    return network?.name === 'maticmum'
   } else if (REACT_APP_ETH_NETWORK === 'mainnet') {
-    return network === 'matic'
+    return network?.name === 'matic'
   }
   return false
 }

@@ -78,8 +78,8 @@ export const Error = ({ error, rawError, network, connected }) => {
   const correctNework = validateNetwork(connected, network)
   return (
     <ErrorContainer>
-      {!correctNework && <ErrorMessage>Incorrect Network: {network}</ErrorMessage>}
-      <ErrorMessage>{error.replace('execution reverted', '')}</ErrorMessage>
+      {!correctNework && <ErrorMessage>Incorrect Network: {network?.name}</ErrorMessage>}
+      <ErrorMessage>{error.replace('execution reverted:', '')}</ErrorMessage>
       {shouldShowDebug(error) && (
         <DebugErrorContainer>
           <ErrorInfoText>
