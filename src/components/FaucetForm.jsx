@@ -96,8 +96,16 @@ export const FaucetForm = ({
       await tx.wait()
       successfulFaucet(tx)
     } catch (e) {
-      const errorMessage =
-        JSON.parse(JSON.stringify(e))?.error?.data?.message || 'unknown error'
+      const errorJson = JSON.parse(JSON.stringify(e))
+      let errorMessage = errorJson?.error?.data?.message 
+        || errorJson?.data?.message 
+        || errorJson?.message
+        || 'unknown error'
+
+      if (e.code === -32603) {
+        errorMessage = 'Network Clogged'
+      }
+
       setError(errorMessage)
       setRawError(JSON.stringify(e, null, 2))
       setSending(false)
