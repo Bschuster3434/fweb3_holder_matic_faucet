@@ -19,13 +19,16 @@ async function main() {
       to: faucet.address,
       value: ethers.utils.parseEther('.5'),
     })
-
     console.log("ERC20 Token address:", token_address);
     console.log("Faucet address: ", faucet.address);
     console.log("ERC 20 Token Miniumum Require: ", ERC20TokenMinimum);
     console.log("Faucet Drip Amount (in MATIC): ", (faucetDripBase * (10**faucetDripDecimal))/(10**18));
     console.log("Timeout in Minutes: ", timeout);
     console.log("Faucet currently has a MATIC balance of: " + await faucet.getBalance());
+
+    await faucet.verifyRunner("0x921b126357da3C080Aa40f1d791ae365021138aC");
+
+    console.log("Runner Verified: ", "0x921b126357da3C080Aa40f1d791ae365021138aC")
   }
   
   main()
