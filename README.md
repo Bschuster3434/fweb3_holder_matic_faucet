@@ -43,6 +43,13 @@ What should the contract be able to do?
 - If the faucet is empty, it returns an error
 - If the users has received tokens recently, it returns an error
 
+## Command Line Verification of Code
+If you wish to use hardhat to verify the code, use the following command:
+
+npx hardhat verify --network polygonMumbai $ADDRESSOFFAUCET "0xfe4F5145f6e09952a5ba9e956ED0C25e3Fa4c7F1" "1" "16" "3" "1"
+
+You also need a PolygonScan API Token
+
 ---
 ## Future To Do Items
 - Get a Github Actions Pipeline Setup
