@@ -29,6 +29,8 @@ describe("SchusterEtherFaucet", function () {
     Faucet = await ethers.getContractFactory("SchusterEtherFaucet");
     faucet = await Faucet.deploy(schusterToken.address, faucetDripBase, faucetDripDecimal, ERC20TokenMinimum, timeout);
 
+    await faucet.verifyRunner(owner.address);
+
     const transactionHashToken = await schusterToken.transfer(
       addr1.address,
       ethers.utils.parseEther('300')
@@ -210,5 +212,27 @@ describe("SchusterEtherFaucet", function () {
         .withArgs(addr1.address, await getCurrentBlockTimestamp());
 
     })
+
+    it('Should not allowed non-verified accounts to run the faucet', async function () {
+      // Send 100 ETH to the faucet to prime it
+      const transactionHash = await owner.sendTransaction({
+        to: faucet.address,
+        value: ethers.utils.parseEther('100.0'),
+      })
+
+      await expect(faucet.connect(addr1).faucet(addr1.address))
+        .to.be.revertedWith("Not Verified to Run Faucet");
+
+      await faucet.verifyRunner(addr1.address);
+
+      await faucet.connect(addr1).faucet(addr1.address);
+
+      await faucet.removeRunner(addr1.address);
+
+      await expect(faucet.connect(addr1).faucet(addr1.address))
+        .to.be.revertedWith("Not Verified to Run Faucet");
+
+    })
+
   })
 })
