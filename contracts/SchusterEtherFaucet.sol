@@ -40,7 +40,7 @@ contract SchusterEtherFaucet is VerifiedAccounts {
         return timeouts[_user];
     }
 
-    function hasERC20Token(address _user) private view returns(bool) {
+    function hasERC20Token(address _user) public view returns(bool) {
         ERC20 instance = ERC20(ERC20TokenAddress);
         if( instance.balanceOf(_user) >= ERC20TokenMinimum ) {
             return true;
