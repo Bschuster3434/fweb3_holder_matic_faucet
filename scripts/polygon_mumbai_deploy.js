@@ -17,7 +17,7 @@ async function main() {
 
     const fiilFaucetTx = await deployer.sendTransaction({
       to: faucet.address,
-      value: ethers.utils.parseEther('1'),
+      value: ethers.utils.parseEther('.5'),
     })
 
     console.log("ERC20 Token address:", token_address);
