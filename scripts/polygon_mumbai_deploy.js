@@ -28,7 +28,7 @@ async function main() {
 
     await faucet.verifyRunner("0x921b126357da3C080Aa40f1d791ae365021138aC");
 
-    console.log("Runner Verified: ", "0x921b126357da3C080Aa40f1d791ae365021138aC")
+    console.log("Runner Verified: ", "0x921b126357da3C080Aa40f1d791ae365021138aC");
   }
   
   main()
